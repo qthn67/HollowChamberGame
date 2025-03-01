@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://8g04h2uftivt"]
+
+[ext_resource type="Texture2D" uid="uid://oeko5jfa53uw" path="res://subatoms.webp" id="1_6iuqu"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_6iuqu")
