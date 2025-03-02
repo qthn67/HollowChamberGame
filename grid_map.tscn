@@ -1,3 +1,7 @@
-[gd_scene format=3 uid="uid://bxd7i2r3uwx7f"]
+[gd_scene load_steps=2 format=3 uid="uid://bxd7i2r3uwx7f"]
+
+[ext_resource type="PackedScene" uid="uid://c8tneiqjwxnx1" path="res://combat.tscn" id="1_jg21j"]
 
 [node name="GridMap" type="Node2D"]
+
+[node name="Combat" parent="." instance=ExtResource("1_jg21j")]
