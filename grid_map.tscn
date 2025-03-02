@@ -5,9 +5,9 @@
 
 [node name="GridMap" type="Node2D"]
 
-[node name="Combat" parent="." instance=ExtResource("1_jg21j")]
-
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(160, 90)
+
+[node name="Combat" parent="." instance=ExtResource("1_jg21j")]
 
 [node name="Inventory" parent="." instance=ExtResource("2_8u47o")]
