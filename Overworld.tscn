@@ -1,5 +1,7 @@
-[gd_scene format=3 uid="uid://fmplvo10mkyc"]
+[gd_scene format=3 uid="uid://bckqplox1pkgd"]
 
 [node name="Overworld" type="Node2D"]
 
 [node name="Node2D" type="Node2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
