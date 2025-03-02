@@ -4,10 +4,7 @@
 layout_mode = 3
 anchors_preset = 0
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(160, 90)
-
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="CombatBackground" type="TextureRect" parent="."]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
