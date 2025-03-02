@@ -11,7 +11,7 @@ extends Control
 
 var can_select_enemy : bool = false
 
-var player_damage : int = 20
+var player_bullet_damage : int = 20
 var max_player_ammo : int = 32
 var player_ammo : int = 32
 var loaded_bullets : int = 0
@@ -33,24 +33,39 @@ func _process(delta):
 			player_ammo = 0
 			
 func _on_gun_pressed():
+	can_select_enemy = false
+	
 	gun_options.visible = true
 	options.visible = false
+	
 
 func _on_chant_pressed():
-	pass # Replace with function body.
+	can_select_enemy = false
+	
 
+func _on_melee_pressed():
+	can_select_enemy = true
+	
 
 func _on_murder_pressed():
 	can_select_enemy = true
 
 func _on_pass_pressed():
+	can_select_enemy = false
+	
 	loaded_bullets -= 1
+	if bonus_turn_amount < 10:
+		bonus_turn_amount += 1
 
 func _on_shoot_self_pressed():
-	player_hp -= player_damage
+	can_select_enemy = false
+	
+	player_hp -= player_bullet_damage
 	loaded_bullets -= 1
 
 func _on_back_pressed():
+	can_select_enemy = false
+	
 	gun_options.visible = false
 	options.visible = true
 	
