@@ -1,3 +1,5 @@
-[gd_scene format=3 uid="uid://1tfmyyb5obwb"]
+[gd_scene format=3 uid="uid://b5dsu6nfvx65t"]
 
 [node name="GridMap" type="Node2D"]
+
+[node name="sillybiilysillybiily" type="Node2D" parent="."]
