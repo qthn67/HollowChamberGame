@@ -6,15 +6,30 @@
 [node name="Node2D" instance=ExtResource("1_otqwp")]
 
 [node name="Sprite2D" parent="." index="0"]
-position = Vector2(-61, -12)
+position = Vector2(239, 191)
 rotation = -2.35619
 
 [node name="Sprite2D" type="Sprite2D" parent="Sprite2D" index="0"]
-position = Vector2(-440.526, 361.333)
+position = Vector2(-579.824, 650.541)
 rotation = -2.35619
 texture = ExtResource("2_gyeje")
 
 [node name="Sprite2D" type="Sprite2D" parent="Sprite2D/Sprite2D" index="0"]
-position = Vector2(446.002, 337.997)
+position = Vector2(584.005, 572.995)
+rotation = -2.35619
+texture = ExtResource("2_gyeje")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Sprite2D" index="1"]
+position = Vector2(-1161.07, 335.174)
+rotation = -2.35619
+texture = ExtResource("2_gyeje")
+
+[node name="Sprite2D" type="Sprite2D" parent="Sprite2D/Sprite2D2" index="0"]
+position = Vector2(-579.824, 650.541)
+rotation = -2.35619
+texture = ExtResource("2_gyeje")
+
+[node name="Sprite2D" type="Sprite2D" parent="Sprite2D/Sprite2D2/Sprite2D" index="0"]
+position = Vector2(584.005, 572.995)
 rotation = -2.35619
 texture = ExtResource("2_gyeje")
