@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://cecwfav6dle0b"]
+
+[node name="Inventory" type="Node2D"]
