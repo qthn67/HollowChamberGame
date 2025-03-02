@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://bxd7i2r3uwx7f"]
+[gd_scene load_steps=7 format=3 uid="uid://bxd7i2r3uwx7f"]
 
 [ext_resource type="PackedScene" uid="uid://c8tneiqjwxnx1" path="res://combat.tscn" id="1_qvwqx"]
 [ext_resource type="PackedScene" uid="uid://dxybk47aru1rj" path="res://inventory.tscn" id="2_foj7m"]
 [ext_resource type="Texture2D" uid="uid://c2ajro7gbm3oo" path="res://Untitled (38).png" id="3_5cepj"]
+[ext_resource type="Script" path="res://place_tile.gd" id="4_40q7v"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8qa3h"]
 texture = ExtResource("3_5cepj")
@@ -249,3 +250,4 @@ position = Vector2(160, 90)
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_hleud")
 format = 2
+script = ExtResource("4_40q7v")
