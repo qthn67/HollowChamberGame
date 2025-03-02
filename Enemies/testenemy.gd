@@ -17,4 +17,7 @@ func _on_texture_button_pressed():
 	if combat.can_select_enemy == true:
 		hp -= combat.player_bullet_damage
 		combat.can_select_enemy = false
-		combat.loaded_bullets -= 1
+		if combat.use_bullets == true:
+			combat.loaded_bullets -= 1
+		else:
+			pass

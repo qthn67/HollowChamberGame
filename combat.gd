@@ -10,6 +10,7 @@ extends Control
 @onready var gun_options = $GunOptions
 
 var can_select_enemy : bool = false
+var use_bullets : bool = false
 
 var player_bullet_damage : int = 20
 var max_player_ammo : int = 32
@@ -18,7 +19,7 @@ var loaded_bullets : int = 0
 var player_hp : int = 100
 var bonus_turn_amount : int = 0
 
-func _process(delta):
+func _process(_delta):
 	bonus_turn_bar.value = bonus_turn_amount
 	player_hp_bar.value = player_hp
 	
@@ -44,10 +45,12 @@ func _on_chant_pressed():
 	
 
 func _on_melee_pressed():
+	use_bullets = false
 	can_select_enemy = true
 	
 
 func _on_murder_pressed():
+	use_bullets = true
 	can_select_enemy = true
 
 func _on_pass_pressed():
