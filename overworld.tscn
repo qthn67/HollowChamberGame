@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://crbskq0yxehw1"]
+[gd_scene load_steps=10 format=3 uid="uid://ce75oowc2x6cm"]
 
 [ext_resource type="PackedScene" uid="uid://c8tneiqjwxnx1" path="res://combat.tscn" id="1_qvwqx"]
 [ext_resource type="PackedScene" uid="uid://dxybk47aru1rj" path="res://inventory.tscn" id="2_foj7m"]
@@ -9,15 +9,23 @@
 resource_name = "CameraControl"
 script/source = "extends Camera2D
 
+# Variables to control the zoom speed
+var zoom_speed = 5
+var min_zoom = 0.5
+var max_zoom = 10
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func _process(delta):
+	# Check for ZoomIn and ZoomOut actions (mouse scroll wheel or key presses)
+	if Input.is_action_just_pressed(\"ZoomIn\"):
+		zoom.x = lerp(zoom.x, zoom.x - zoom_speed, zoom_speed * delta)
+		zoom.y = lerp(zoom.y, zoom.y - zoom_speed, zoom_speed * delta)
+	elif Input.is_action_just_pressed(\"ZoomOut\"):
+		zoom.x = lerp(zoom.x, zoom.x + zoom_speed, zoom_speed * delta)
+		zoom.y = lerp(zoom.y, zoom.y + zoom_speed, zoom_speed * delta)
+	
+	# Clamp zoom between the minimum and maximum values
+	zoom.x = clamp(zoom.x, min_zoom, max_zoom)
+	zoom.y = clamp(zoom.y, min_zoom, max_zoom)
 "
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hu40o"]
@@ -1009,24 +1017,23 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 
-\"\"\"
+
 func _process(delta: float) -> void:
 	var tile_id = 1
-	var tile_position = Vector2i(randi_range(1,10), randi_range(1,10))
+	var tile_position = Vector2i(randi_range(0,100), randi_range(0,1000))
 	var atlas_coords = Vector2i(0,0)
 	var layer = 0
 
 	set_cell(layer, tile_position, tile_id, atlas_coords)
-
-\"\"\"
 "
 
-[node name="GridMap" type="Node2D"]
+[node name="overworld" type="Node2D"]
 
 [node name="Combat" parent="." instance=ExtResource("1_qvwqx")]
+visible = false
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(160, 90)
+position = Vector2(964, 541)
 script = SubResource("GDScript_gl4o0")
 
 [node name="Inventory" parent="." instance=ExtResource("2_foj7m")]
@@ -1037,4 +1044,4 @@ rendering_quadrant_size = 32
 format = 2
 script = SubResource("GDScript_jq4hc")
 
-[node name="Node" type="Node" parent="GroundTiles"]
+[node name="DisplaySprite" type="Sprite2D" parent="."]
