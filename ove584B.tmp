@@ -1,24 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://crbskq0yxehw1"]
+[gd_scene load_steps=7 format=3 uid="uid://cs6347xwoxnnr"]
 
 [ext_resource type="PackedScene" uid="uid://c8tneiqjwxnx1" path="res://combat.tscn" id="1_qvwqx"]
 [ext_resource type="PackedScene" uid="uid://dxybk47aru1rj" path="res://inventory.tscn" id="2_foj7m"]
-[ext_resource type="Texture2D" uid="uid://c2ajro7gbm3oo" path="res://testTilemap.png" id="3_5cepj"]
-[ext_resource type="Texture2D" uid="uid://bxv6q85s2bfio" path="res://TempGroundTexture.png" id="4_dno33"]
-
-[sub_resource type="GDScript" id="GDScript_gl4o0"]
-resource_name = "CameraControl"
-script/source = "extends Camera2D
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-"
+[ext_resource type="Texture2D" uid="uid://c2ajro7gbm3oo" path="res://Untitled (38).png" id="3_5cepj"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hu40o"]
 texture = ExtResource("3_5cepj")
@@ -984,15 +968,8 @@ texture = ExtResource("3_5cepj")
 29:30/0 = 0
 30:30/0 = 0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_co2pj"]
-texture = ExtResource("4_dno33")
-texture_region_size = Vector2i(32, 32)
-0:0/0 = 0
-
 [sub_resource type="TileSet" id="TileSet_l25xa"]
-tile_size = Vector2i(32, 32)
 sources/0 = SubResource("TileSetAtlasSource_hu40o")
-sources/1 = SubResource("TileSetAtlasSource_co2pj")
 
 [sub_resource type="GDScript" id="GDScript_jq4hc"]
 resource_name = "TilePlacement"
@@ -1008,17 +985,13 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-
-\"\"\"
 func _process(delta: float) -> void:
-	var tile_id = 1
+	var tile_id = 0
 	var tile_position = Vector2i(randi_range(1,10), randi_range(1,10))
-	var atlas_coords = Vector2i(0,0)
+	var atlas_coords = Vector2i(randi_range(0,30), randi_range(0,30))
 	var layer = 0
 
 	set_cell(layer, tile_position, tile_id, atlas_coords)
-
-\"\"\"
 "
 
 [node name="GridMap" type="Node2D"]
@@ -1027,14 +1000,10 @@ func _process(delta: float) -> void:
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(160, 90)
-script = SubResource("GDScript_gl4o0")
 
 [node name="Inventory" parent="." instance=ExtResource("2_foj7m")]
 
 [node name="GroundTiles" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_l25xa")
-rendering_quadrant_size = 32
 format = 2
 script = SubResource("GDScript_jq4hc")
-
-[node name="Node" type="Node" parent="GroundTiles"]
