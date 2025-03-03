@@ -1,9 +1,32 @@
-[gd_scene load_steps=8 format=3 uid="uid://ce75oowc2x6cm"]
+[gd_scene load_steps=10 format=3 uid="uid://ce75oowc2x6cm"]
 
 [ext_resource type="PackedScene" uid="uid://c8tneiqjwxnx1" path="res://combat.tscn" id="1_qvwqx"]
 [ext_resource type="PackedScene" uid="uid://dxybk47aru1rj" path="res://inventory.tscn" id="2_foj7m"]
 [ext_resource type="Texture2D" uid="uid://c2ajro7gbm3oo" path="res://testTilemap.png" id="3_5cepj"]
 [ext_resource type="Texture2D" uid="uid://bxv6q85s2bfio" path="res://TempGroundTexture.png" id="4_dno33"]
+
+[sub_resource type="GDScript" id="GDScript_gl4o0"]
+resource_name = "CameraControl"
+script/source = "extends Camera2D
+
+# Zoom speed (adjust this to suit your needs)
+var zoom_speed = 0.1
+
+func _ready():
+	# Set an initial zoom factor (optional)
+	zoom = Vector2(1, 1)
+
+func _input(event):
+	# Check if the event is a mouse scroll event
+	if event is InputEventMouseButton:
+		# Check if the scroll is in the Y direction (up or down)
+		if Input.is_action_just_pressed(\"ZoomIn\"):
+			zoom -= Vector2(zoom_speed, zoom_speed)
+		
+		# Clamp the zoom to avoid excessive zooming
+		zoom.x = clamp(zoom.x, 0.1, 10)
+		zoom.y = clamp(zoom.y, 0.1, 10)
+"
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hu40o"]
 texture = ExtResource("3_5cepj")
@@ -979,14 +1002,42 @@ tile_size = Vector2i(32, 32)
 sources/0 = SubResource("TileSetAtlasSource_hu40o")
 sources/1 = SubResource("TileSetAtlasSource_co2pj")
 
-[node name="overworld" type="Node2D"]
+[sub_resource type="GDScript" id="GDScript_jq4hc"]
+resource_name = "TilePlacement"
+script/source = "extends TileMap
 
-[node name="Camera2D" type="Camera2D" parent="."]
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass
+	
+	
+	
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+
+
+func _process(delta: float) -> void:
+	var tile_id = 1
+	var tile_position = Vector2i(randi_range(0,10), randi_range(0,10))
+	var atlas_coords = Vector2i(0,0)
+	var layer = 0
+
+	set_cell(layer, tile_position, tile_id, atlas_coords)
+"
+
+[node name="overworld" type="Node2D"]
 
 [node name="Combat" parent="." instance=ExtResource("1_qvwqx")]
 visible = false
 offset_left = 1.0
 offset_right = 1.0
+script = null
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(160, 90)
+script = SubResource("GDScript_gl4o0")
 
 [node name="Inventory" parent="." instance=ExtResource("2_foj7m")]
 
@@ -994,5 +1045,6 @@ offset_right = 1.0
 tile_set = SubResource("TileSet_l25xa")
 rendering_quadrant_size = 32
 format = 2
+script = SubResource("GDScript_jq4hc")
 
 [node name="Node" type="Node" parent="GroundTiles"]
