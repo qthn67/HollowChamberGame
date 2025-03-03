@@ -1,10 +1,158 @@
-[gd_scene format=3 uid="uid://c8tneiqjwxnx1"]
+[gd_scene load_steps=5 format=3 uid="uid://c8tneiqjwxnx1"]
+
+[ext_resource type="Script" path="res://combat.gd" id="1_d54ak"]
+[ext_resource type="Script" path="res://button.gd" id="2_hqfi1"]
+[ext_resource type="Texture2D" uid="uid://xhvnjc68gp6t" path="res://Player/wunkus.jpg" id="2_y5sla"]
+[ext_resource type="PackedScene" uid="uid://ccnu7s0to31wm" path="res://EnemyLayouts/test_enemy_layout.tscn" id="3_p7wow"]
 
 [node name="Combat" type="Control"]
 layout_mode = 3
 anchors_preset = 0
+script = ExtResource("1_d54ak")
+
+[node name="TempPlayer" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 53.0
+offset_right = 786.0
+offset_bottom = 553.0
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_y5sla")
+
+[node name="BonusTurnBar" type="ProgressBar" parent="."]
+layout_mode = 0
+offset_left = 162.0
+offset_top = 101.0
+offset_right = 171.0
+offset_bottom = 175.0
+max_value = 10.0
+value = 6.0
+fill_mode = 3
+show_percentage = false
+
+[node name="PlayerHpBar" type="ProgressBar" parent="."]
+layout_mode = 0
+offset_top = 153.0
+offset_right = 160.0
+offset_bottom = 180.0
+value = 50.0
+show_percentage = false
 
 [node name="CombatBackground" type="TextureRect" parent="."]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="EnemySpawnSpot" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 200.0
+offset_top = 80.0
+offset_right = 200.0
+offset_bottom = 80.0
+
+[node name="TestEnemyLayout" parent="EnemySpawnSpot" instance=ExtResource("3_p7wow")]
+
+[node name="TempBulletCounter" type="Label" parent="."]
+layout_mode = 0
+offset_right = 89.0
+offset_bottom = 46.0
+text = "ammo"
+
+[node name="TempLoadedBulletCounter" type="Label" parent="."]
+layout_mode = 0
+offset_top = 20.0
+offset_right = 89.0
+offset_bottom = 66.0
+text = "loaded ammo"
+
+[node name="Options" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Gun" type="Button" parent="Options"]
+layout_mode = 2
+offset_left = 176.0
+offset_top = 96.0
+offset_right = 226.0
+offset_bottom = 127.0
+text = "Gun"
+script = ExtResource("2_hqfi1")
+
+[node name="Chant" type="Button" parent="Options"]
+layout_mode = 2
+offset_left = 176.0
+offset_top = 131.0
+offset_right = 219.0
+offset_bottom = 162.0
+text = "Chant"
+script = ExtResource("2_hqfi1")
+
+[node name="Items" type="Button" parent="Options"]
+layout_mode = 0
+offset_left = 229.0
+offset_top = 96.0
+offset_right = 311.0
+offset_bottom = 127.0
+text = "Items"
+script = ExtResource("2_hqfi1")
+
+[node name="Melee" type="Button" parent="Options"]
+layout_mode = 0
+offset_left = 235.0
+offset_top = 131.0
+offset_right = 311.0
+offset_bottom = 162.0
+text = "Melee"
+script = ExtResource("2_hqfi1")
+
+[node name="GunOptions" type="Control" parent="."]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Murder" type="Button" parent="GunOptions"]
+layout_mode = 2
+offset_left = 176.0
+offset_top = 96.0
+offset_right = 219.0
+offset_bottom = 127.0
+text = "Kill"
+script = ExtResource("2_hqfi1")
+
+[node name="Pass" type="Button" parent="GunOptions"]
+layout_mode = 2
+offset_left = 176.0
+offset_top = 131.0
+offset_right = 219.0
+offset_bottom = 162.0
+text = "Pass"
+script = ExtResource("2_hqfi1")
+
+[node name="ShootSelf" type="Button" parent="GunOptions"]
+layout_mode = 0
+offset_left = 228.0
+offset_top = 96.0
+offset_right = 310.0
+offset_bottom = 127.0
+text = "ShootSelf"
+script = ExtResource("2_hqfi1")
+
+[node name="Back" type="Button" parent="GunOptions"]
+layout_mode = 0
+offset_left = 227.0
+offset_top = 131.0
+offset_right = 309.0
+offset_bottom = 162.0
+text = "Go Back"
+script = ExtResource("2_hqfi1")
+
+[connection signal="pressed" from="Options/Gun" to="." method="_on_gun_pressed"]
+[connection signal="pressed" from="Options/Chant" to="." method="_on_chant_pressed"]
+[connection signal="pressed" from="Options/Melee" to="." method="_on_melee_pressed"]
+[connection signal="pressed" from="GunOptions/Murder" to="." method="_on_murder_pressed"]
+[connection signal="pressed" from="GunOptions/Pass" to="." method="_on_pass_pressed"]
+[connection signal="pressed" from="GunOptions/ShootSelf" to="." method="_on_shoot_self_pressed"]
+[connection signal="pressed" from="GunOptions/Back" to="." method="_on_back_pressed"]
