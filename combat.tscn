@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://c8tneiqjwxnx1"]
 
-[ext_resource type="PackedScene" uid="uid://58fw7yrffgly" path="res://Enemies/testenemy.tscn" id="1_6v83h"]
 [ext_resource type="Script" path="res://combat.gd" id="1_d54ak"]
 [ext_resource type="Script" path="res://button.gd" id="2_hqfi1"]
 [ext_resource type="Texture2D" uid="uid://xhvnjc68gp6t" path="res://Player/wunkus.jpg" id="2_y5sla"]
+[ext_resource type="PackedScene" uid="uid://ccnu7s0to31wm" path="res://EnemyLayouts/test_enemy_layout.tscn" id="3_p7wow"]
 
 [node name="Combat" type="Control"]
 layout_mode = 3
@@ -50,7 +50,7 @@ offset_top = 80.0
 offset_right = 200.0
 offset_bottom = 80.0
 
-[node name="TestEnemy" parent="EnemySpawnSpot" instance=ExtResource("1_6v83h")]
+[node name="TestEnemyLayout" parent="EnemySpawnSpot" instance=ExtResource("3_p7wow")]
 
 [node name="TempBulletCounter" type="Label" parent="."]
 layout_mode = 0
