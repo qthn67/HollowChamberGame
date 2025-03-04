@@ -10,6 +10,7 @@ func _process(delta):
 	
 func take_turn():
 	combat.health_element.damage(20)
+	#combat.health_element.bleed(duration)
 
 func _on_texture_button_pressed():
 	if combat.can_select_enemy == true:
