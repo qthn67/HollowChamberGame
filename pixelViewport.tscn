@@ -1,10 +1,10 @@
 [gd_scene load_steps=2 format=3 uid="uid://cjacovey44mj2"]
 
-[ext_resource type="PackedScene" uid="uid://ce75oowc2x6cm" path="res://overworld.tscn" id="1_sc86j"]
+[ext_resource type="PackedScene" uid="uid://ce75oowc2x6cm" path="res://overworld.tscn" id="1_ddmru"]
 
-[node name="Main" type="Node2D"]
+[node name="pixelViewport" type="Node2D"]
 
-[node name="overworld" parent="." instance=ExtResource("1_sc86j")]
+[node name="overworld" parent="." instance=ExtResource("1_ddmru")]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
