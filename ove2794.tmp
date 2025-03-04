@@ -8,6 +8,7 @@
 resource_name = "CameraControl"
 script/source = "extends Camera2D
 
+# Variables to control the zoom speed
 var zoom_speed = 3
 var min_zoom = 0.5
 var max_zoom = 10
@@ -20,8 +21,7 @@ func _ready():
 	last_mouse_position = get_viewport().get_mouse_position()
 	
 func _process(delta):
-	
-	
+	# Check for ZoomIn and ZoomOut actions (mouse scroll wheel or key presses)
 	if Input.is_action_just_pressed(\"ZoomIn\"):
 		zoom.x = lerp(zoom.x, zoom.x - zoom_speed, zoom_speed * delta)
 		zoom.y = lerp(zoom.y, zoom.y - zoom_speed, zoom_speed * delta)
@@ -29,24 +29,14 @@ func _process(delta):
 		zoom.x = lerp(zoom.x, zoom.x + zoom_speed, zoom_speed * delta)
 		zoom.y = lerp(zoom.y, zoom.y + zoom_speed, zoom_speed * delta)
 	
-	
+	# Clamp zoom between the minimum and maximum values
 	zoom.x = clamp(zoom.x, min_zoom, max_zoom)
 	zoom.y = clamp(zoom.y, min_zoom, max_zoom)
 	
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):  
-		if not dragging:
-			dragging = true
-			
-			last_mouse_position = get_viewport().get_mouse_position()  
 	
-		if dragging:
-			
-			mouse_diff = get_viewport().get_mouse_position() - last_mouse_position
-			offset -= mouse_diff/1.5
-			last_mouse_position = get_viewport().get_mouse_position()
-		
-	elif not Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT) and dragging:
-		dragging = false
+	mouse_diff = get_viewport().get_mouse_position() - last_mouse_position
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
+		offset += mouse_diff
 "
 
 [node name="overworld" type="Node2D"]
