@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://c8tneiqjwxnx1"]
+[gd_scene load_steps=6 format=3 uid="uid://c8tneiqjwxnx1"]
 
 [ext_resource type="Script" path="res://combat.gd" id="1_d54ak"]
 [ext_resource type="Script" path="res://button.gd" id="2_hqfi1"]
+[ext_resource type="PackedScene" uid="uid://bo51nbtkoyh7a" path="res://health_element.tscn" id="2_qpjg3"]
 [ext_resource type="Texture2D" uid="uid://xhvnjc68gp6t" path="res://Player/wunkus.jpg" id="2_y5sla"]
 [ext_resource type="PackedScene" uid="uid://ccnu7s0to31wm" path="res://EnemyLayouts/test_enemy_layout.tscn" id="3_p7wow"]
 
@@ -9,6 +10,8 @@
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_d54ak")
+
+[node name="HealthElement" parent="." instance=ExtResource("2_qpjg3")]
 
 [node name="TempPlayer" type="TextureRect" parent="."]
 layout_mode = 0
@@ -101,7 +104,7 @@ text = "Melee"
 script = ExtResource("2_hqfi1")
 
 [node name="MeleeBar" type="ProgressBar" parent="Options/Melee"]
-z_index = -1
+z_index = -5
 layout_mode = 0
 offset_left = 1.0
 offset_top = 2.0

@@ -1,10 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://58fw7yrffgly"]
+[gd_scene load_steps=4 format=3 uid="uid://58fw7yrffgly"]
 
 [ext_resource type="Texture2D" uid="uid://btivhlysxoq3k" path="res://Enemies/cat.jpg" id="1_mb00m"]
 [ext_resource type="Script" path="res://Enemies/testenemy.gd" id="1_pnqve"]
+[ext_resource type="PackedScene" uid="uid://bo51nbtkoyh7a" path="res://health_element.tscn" id="2_xdi4v"]
 
-[node name="TestEnemy" type="Node2D"]
+[node name="TestEnemy" type="Node2D" groups=["enemy"]]
 script = ExtResource("1_pnqve")
+
+[node name="HealthElement" parent="." instance=ExtResource("2_xdi4v")]
 
 [node name="EnemyContainer" type="VBoxContainer" parent="."]
 anchors_preset = 7
