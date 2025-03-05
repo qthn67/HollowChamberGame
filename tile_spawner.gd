@@ -1,18 +1,20 @@
 extends Node2D
-@export var tilemap: TileMap
+@export var ground_tiles: TileMap
 
-var location = Vector2i(4,4)
+var location = Vector2i(30,17)
 var atlas = Vector2i(0,0)
 var tile_id = 1
 
-var lifetime = 4
+var lifetime = 5
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var source_marker = marker.new(tilemap, location, tile_id, 0, atlas, lifetime)
+	var source_marker = marker.new(ground_tiles, location, tile_id, 0, atlas, lifetime)
+	
 	await get_tree().create_timer(0.4).timeout
-	tilemap.clear()
+	ground_tiles.clear()
+	ground_tiles.ground_marker_locations.clear()
 	_ready()
 	
 
@@ -39,16 +41,21 @@ class marker:
 		start()
 		
 	func start():
-		if randi() % 100 < 95:
-			tilemap.set_cell(layer, tile_position, tile_id, atlas)
+		
+		tilemap.set_cell(layer, tile_position, tile_id, atlas)
+		
+		
+		tilemap.ground_marker_locations.append(tile_position)
+		
+		
 		
 		for x in range (0, self_lifetime):
 			
 			# Randomly choose one of two lines of code to execute
 			if randi() % 2 == 0:
-				tile_position.x += 1
+				tile_position.x += randi_range(-1,1)
 			else:
-				tile_position.y += 1
+				tile_position.y += randi_range(-1,1)
 			
 			
 			var next_marker = marker.new(tilemap, tile_position, tile_id, 0, atlas, next_lifetime)
