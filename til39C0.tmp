@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://c1vxetm2n4erh"]
+[gd_scene load_steps=14 format=3 uid="uid://c1vxetm2n4erh"]
 
 [ext_resource type="Script" path="res://tile_spawner.gd" id="1_uro4e"]
 [ext_resource type="Texture2D" uid="uid://c2ajro7gbm3oo" path="res://testTilemap.png" id="2_x1h75"]
 [ext_resource type="Texture2D" uid="uid://bxv6q85s2bfio" path="res://TempGroundTexture.png" id="3_meelh"]
 [ext_resource type="Script" path="res://event_placement.gd" id="4_drdyq"]
 [ext_resource type="Texture2D" uid="uid://drxjw4gtsw373" path="res://TempItemsTiles.png" id="4_rrthb"]
+[ext_resource type="Script" path="res://tile_marker.gd" id="4_x3ukr"]
 [ext_resource type="Texture2D" uid="uid://c3kfkrqfs4hv7" path="res://TempPlayer.png" id="7_h5kas"]
 [ext_resource type="Script" path="res://player_movement.gd" id="7_j5mqt"]
 
@@ -1041,15 +1042,15 @@ script = ExtResource("4_drdyq")
 ground_tiles = NodePath("../GroundTiles")
 
 [node name="Node2D" type="Node2D" parent="."]
+script = ExtResource("4_x3ukr")
 
-[node name="Player" type="CharacterBody2D" parent="Node2D" node_paths=PackedStringArray("tile_spawner", "ground_tiles", "event_tiles")]
+[node name="Player" type="CharacterBody2D" parent="Node2D" node_paths=PackedStringArray("ground_tiles")]
 motion_mode = 1
 script = ExtResource("7_j5mqt")
-tile_spawner = NodePath("../..")
 ground_tiles = NodePath("../../GroundTiles")
-event_tiles = NodePath("../../EventTiles")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Player"]
 
 [node name="Sprite2D" type="Sprite2D" parent="Node2D/Player"]
+position = Vector2(927, 500)
 texture = ExtResource("7_h5kas")

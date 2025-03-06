@@ -56,7 +56,7 @@ visible = false
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(964, 541)
-zoom = Vector2(3, 3)
+zoom = Vector2(2, 2)
 script = SubResource("GDScript_gl4o0")
 
 [node name="Inventory" parent="." instance=ExtResource("2_foj7m")]
