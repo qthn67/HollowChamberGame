@@ -1,7 +1,3 @@
-<<<<<<< Updated upstream
 [gd_scene format=3 uid="uid://dxybk47aru1rj"]
-=======
-[gd_scene load_steps=0 format=3 uid="uid://yyixmbcd8sv8"]
->>>>>>> Stashed changes
 
 [node name="Inventory" type="Node2D"]
