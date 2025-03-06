@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Items" load_steps=3 format=3 uid="uid://d35mdwocpgvv8"]
+
+[ext_resource type="Script" uid="uid://cs0umrbgbnccb" path="res://Inventory/inventory_items.gd" id="1_66com"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_wkh2r"]
+
+[resource]
+script = ExtResource("1_66com")
+name = "Bullet 5"
+texture = SubResource("PlaceholderTexture2D_wkh2r")
+metadata/_custom_type_script = "uid://cs0umrbgbnccb"
