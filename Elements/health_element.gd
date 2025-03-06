@@ -6,12 +6,12 @@ var current_hp
 func _ready():
 	current_hp = max_hp
 
-func _process(delta):
+func _process(_delta):
 	if current_hp > max_hp:
 		current_hp = max_hp
 
-func damage(damage):
-	current_hp -= damage
+func damage(hp):
+	current_hp -= hp
 
-func heal(heal):
-	current_hp += heal
+func heal(hp):
+	current_hp += hp

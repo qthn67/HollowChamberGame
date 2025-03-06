@@ -6,6 +6,10 @@ extends Node2D
 @onready var test_enemy_layout = $TestEnemyLayout
 
 @onready var health_element: Node2D = $HealthElement
+@onready var narration: Label = $Narration
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+
+@onready var narration_delay = $NarrationDelay
 
 @onready var gun = $Options/Gun
 @onready var chant = $Options/Chant
@@ -29,6 +33,9 @@ var can_select_enemy : bool = false
 var use_bullets : bool = false
 var is_knife : bool = false
 
+var concussed : bool = false
+var silenced : bool = false
+
 var player_bullet_damage : int = 20
 var max_player_ammo : int = 32
 var player_ammo : int = 26
@@ -36,11 +43,14 @@ var loaded_bullets : int = 6
 var bonus_turn_amount : int = 0
 var left_melee_hits : int = 2
 
-
+func _ready() -> void:
+	battle_start()
+	
 func battle_start():
 #fill with functions that reset all the temporary values when the battle restarts
 	bonus_turn_amount = 0
 	left_melee_hits  = 2
+	narrate("Your turn!")
 
 func _process(_delta):
 #Assign values to bars
@@ -86,12 +96,18 @@ func apply_status_effect(e_name: String, duration: int):
 	match e_name:
 		"Poison":
 			effect = PoisonEffect.new(duration)
-		"Bleeding":
+		"Bleed":
 			effect = BleedEffect.new(duration)
 		"Fracture":
 			effect = FractureEffect.new(duration)
 		"Regen":
 			effect = RegenEffect.new(duration)
+		"Concuss":
+			effect = ConcussEffect.new(duration)
+		"Venom":
+			effect = VenomEffect.new(duration)
+		"Silent":
+			effect = SilentEffect.new(duration)
 		
 	if effect:
 		apply_status(effect)
@@ -100,11 +116,29 @@ func process_turn():
 	var active_effects = []
 	
 	for effect in status_effects:
+		if effect is ConcussEffect:
+			concussed = true
+		else:
+			concussed = false
+		
+		if effect is SilentEffect:
+			silenced = true
+		else:
+			silenced = false
+	
+	for effect in status_effects:
 		effect.apply_effect()
 		if effect.decrease_duration() or effect.duration == -1:
 			active_effects.append(effect)
 	
 	status_effects = active_effects
+
+# Simple narration system kinda like in rpg maker
+func narrate(text):
+	narration.text = text
+	animation_player.play("narration_text")
+	narration_delay.start()
+	await narration_delay.timeout
 
 func end_of_turn():
 	gun.disabled = true
@@ -114,29 +148,41 @@ func end_of_turn():
 	gun_options.visible = false
 	options.visible = true
 	
-	if player_ammo >= 6:
-		loaded_bullets += 6
-		player_ammo -= 6
-		left_melee_hits = 2
-	elif player_ammo < 6:
-		loaded_bullets = player_ammo
-		player_ammo = 0
-		left_melee_hits = 2
-	elif player_ammo == 0:
-		left_melee_hits = 2
+	if loaded_bullets == 0:
+		if player_ammo >= 6:
+			loaded_bullets += 6
+			player_ammo -= 6
+			left_melee_hits = 2
+		elif player_ammo < 6:
+			loaded_bullets = player_ammo
+			player_ammo = 0
+			left_melee_hits = 2
+		elif player_ammo == 0:
+			left_melee_hits = 2
 		
-	test_enemy_layout.enemy_turn()
+	await test_enemy_layout.enemy_turn()
 	process_turn()
+	if concussed == false:
+		start_new_turn()
+	else:
+		await narrate("You've been concussed!")
+		end_of_turn()
 	
+	
+func start_new_turn():
 	print(health_element.current_hp)
 	print(health_element.max_hp)
-	murder.disabled = false
-	pass_turn.disabled = false
-	shoot_self.disabled = false
-	gun.disabled = false
-	chant.disabled = false
-	items.disabled = false
-	melee.disabled = false
+	if health_element.current_hp == 0:
+		narrate("player lost")
+	else:
+		murder.disabled = false
+		pass_turn.disabled = false
+		shoot_self.disabled = false
+		gun.disabled = false
+		chant.disabled = false
+		items.disabled = false
+		melee.disabled = false
+		narrate("Your turn!")
 
 func _on_gun_pressed():
 	can_select_enemy = false

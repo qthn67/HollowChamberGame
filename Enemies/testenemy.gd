@@ -4,13 +4,16 @@ extends Node2D
 
 @onready var hp_bar = $EnemyContainer/HpBar
 @onready var combat = $"../.."
-		
-func _process(delta):
+
+func _process(_delta):
 	hp_bar.value = health_element.current_hp
 	
 func take_turn():
-	combat.health_element.damage(1)
+	combat.narrate("Kitty lunges at you!")
+	combat.health_element.damage(10)
 	#combat.apply_status_effect("Fracture",5)
+	#combat.apply_status_effect("Concuss",1)
+	
 
 func _on_texture_button_pressed():
 	if combat.can_select_enemy == true:
