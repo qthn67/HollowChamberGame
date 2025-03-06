@@ -1,6 +1,7 @@
 extends Control
 
 var is_open = false
+
 func _ready():
 	close()
 
@@ -17,5 +18,5 @@ func open():
 
 func close():
 	visible = false
-	is_open = true
+	is_open = false
 	
