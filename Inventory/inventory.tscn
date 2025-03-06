@@ -1,9 +1,17 @@
-[gd_scene format=3 uid="uid://cecwfav6dle0b"]
+[gd_scene load_steps=2 format=3 uid="uid://cecwfav6dle0b"]
+
+[ext_resource type="Script" uid="uid://b6os01h3txo4l" path="res://Inventory/inv_ui.gd" id="1_uov6c"]
 
 [node name="Inventory" type="Node2D"]
 
-[node name="Control" type="Control" parent="."]
+[node name="Inv_UI" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_uov6c")
+
+[node name="ColorRect" type="ColorRect" parent="Inv_UI"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
