@@ -52,7 +52,6 @@ func _process(delta):
 [node name="overworld" type="Node2D"]
 
 [node name="Combat" parent="." instance=ExtResource("1_qvwqx")]
-visible = false
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(964, 541)

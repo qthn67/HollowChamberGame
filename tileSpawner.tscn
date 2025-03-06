@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" path="res://tile_spawner.gd" id="1_uro4e"]
 [ext_resource type="Texture2D" uid="uid://c2ajro7gbm3oo" path="res://testTilemap.png" id="2_x1h75"]
-[ext_resource type="Texture2D" uid="uid://bxv6q85s2bfio" path="res://TempGroundTexture.png" id="3_meelh"]
 [ext_resource type="Script" path="res://event_placement.gd" id="4_drdyq"]
 [ext_resource type="Texture2D" uid="uid://drxjw4gtsw373" path="res://TempItemsTiles.png" id="4_rrthb"]
+[ext_resource type="Texture2D" uid="uid://bnnil1eps3cek" path="res://New Piskel-1.png (3).png" id="5_y1x32"]
 [ext_resource type="Texture2D" uid="uid://c3kfkrqfs4hv7" path="res://TempPlayer.png" id="7_h5kas"]
 [ext_resource type="Script" path="res://player_movement.gd" id="7_j5mqt"]
 
@@ -972,10 +972,11 @@ texture = ExtResource("2_x1h75")
 29:30/0 = 0
 30:30/0 = 0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6yg0w"]
-texture = ExtResource("3_meelh")
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_x4v30"]
+texture = ExtResource("5_y1x32")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
+1:0/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kslio"]
 texture = ExtResource("4_rrthb")
@@ -988,8 +989,8 @@ texture_region_size = Vector2i(32, 32)
 [sub_resource type="TileSet" id="TileSet_4dfm1"]
 tile_size = Vector2i(32, 32)
 sources/0 = SubResource("TileSetAtlasSource_a1oer")
-sources/1 = SubResource("TileSetAtlasSource_6yg0w")
 sources/2 = SubResource("TileSetAtlasSource_kslio")
+sources/1 = SubResource("TileSetAtlasSource_x4v30")
 
 [sub_resource type="GDScript" id="GDScript_7vr8c"]
 resource_name = "TilePlacement"

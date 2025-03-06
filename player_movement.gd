@@ -9,7 +9,6 @@ var animation_finished = true
 func _ready() -> void:
 	await get_tree().create_timer(0.1).timeout
 	position = ground_tiles.map_to_local(Vector2i(30,17)) + Vector2(0,-4)
-	
 	pass
 
 
@@ -17,6 +16,11 @@ func _process(delta: float) -> void:
 	var temp_tile_position
 	var temp_tile_atlas
 	var tween = create_tween()
+	var tile_position
+	tile_position = ground_tiles.local_to_map(global_position)
+	ground_tiles.set_cell(0, tile_position, 1, Vector2i(1,0))
+	event_tiles.set_cell(0, tile_position, 1, Vector2i(-1,-1))
+	ground_tiles.ground_marker_locations.erase(tile_position)
 	
 	#UP
 	if (Input.is_action_just_pressed("ui_up") and animation_finished == true):
@@ -33,6 +37,9 @@ func _process(delta: float) -> void:
 			tween.tween_property(self, "position", position + Vector2(0,0), 0.1).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 			await get_tree().create_timer(0.2).timeout
 		animation_finished = true
+		
+		
+		
 	#DOWN
 	elif (Input.is_action_just_pressed("ui_down") and animation_finished == true):
 		animation_finished = false
