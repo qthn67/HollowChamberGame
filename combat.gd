@@ -33,8 +33,11 @@ var can_select_enemy : bool = false
 var use_bullets : bool = false
 var is_knife : bool = false
 
-var concussed : bool = false
 var silenced : bool = false
+var concussed : bool = false
+var cursed : bool = false
+var asleep : bool = false
+var asleep_hp : int
 
 var player_bullet_damage : int = 20
 var max_player_ammo : int = 32
@@ -108,24 +111,33 @@ func apply_status_effect(e_name: String, duration: int):
 			effect = VenomEffect.new(duration)
 		"Silent":
 			effect = SilentEffect.new(duration)
+		"Curse":
+			effect = CursedEffect.new(duration)
+		"Asleep":
+			effect = AsleepEffect.new(duration)
 		
 	if effect:
 		apply_status(effect)
 			
 func process_turn():
 	var active_effects = []
-	
+	concussed = false
+	silenced = false
+	cursed = false
+	asleep = false
 	for effect in status_effects:
 		if effect is ConcussEffect:
 			concussed = true
-		else:
-			concussed = false
 		
 		if effect is SilentEffect:
 			silenced = true
-		else:
-			silenced = false
-	
+			
+		if effect is CursedEffect:
+			cursed = true
+		
+		if effect is AsleepEffect:
+			asleep = true
+		
 	for effect in status_effects:
 		effect.apply_effect()
 		if effect.decrease_duration() or effect.duration == -1:
@@ -162,10 +174,16 @@ func end_of_turn():
 		
 	await test_enemy_layout.enemy_turn()
 	process_turn()
-	if concussed == false:
+	if asleep_hp > health_element.current_hp:
+		asleep = false
+		
+	if concussed == false && asleep == false:
 		start_new_turn()
-	else:
+	elif concussed == true:
 		await narrate("You've been concussed!")
+		end_of_turn()
+	elif asleep == true:
+		await narrate("You're too eepy to fight!")
 		end_of_turn()
 	
 	
@@ -182,6 +200,12 @@ func start_new_turn():
 		chant.disabled = false
 		items.disabled = false
 		melee.disabled = false
+		
+		if silenced == true:
+			chant.disabled = true
+		if cursed == true:
+			items.disabled = true
+			
 		narrate("Your turn!")
 
 func _on_gun_pressed():
