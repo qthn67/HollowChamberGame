@@ -41,7 +41,7 @@ func check_dead_end(tile_position : Vector2i, ground_tiles : TileMap, item_tilem
 			if (tile_position + x not in ground_tiles.ground_marker_locations):
 				count += 1
 		if (count >= 3):
-			item_tilemap.set_cell(0, tile_position, 2, Vector2i(0,0))
+			item_tilemap.set_cell(0, tile_position, 2, Vector2i(0,1))
 				
 
 class marker:
@@ -72,7 +72,9 @@ class marker:
 		
 	func start():
 		tilemap.set_cell(layer, tile_position, tile_id, atlas)
-		tilemap.ground_marker_locations.append(tile_position)
+		
+		if tile_position not in tilemap.ground_marker_locations:
+			tilemap.ground_marker_locations.append(tile_position)
 		
 		for x in range (0, self_lifetime):
 			# Randomly choose one of two lines of code to execute
