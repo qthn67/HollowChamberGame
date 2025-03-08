@@ -1,0 +1,64 @@
+[gd_scene load_steps=5 format=3 uid="uid://ce75oowc2x6cm"]
+
+[ext_resource type="PackedScene" uid="uid://c8tneiqjwxnx1" path="res://combat.tscn" id="1_qvwqx"]
+[ext_resource type="PackedScene" uid="uid://dxybk47aru1rj" path="res://inventory.tscn" id="2_foj7m"]
+[ext_resource type="PackedScene" uid="uid://c1vxetm2n4erh" path="res://tileSpawner.tscn" id="5_scpxs"]
+
+[sub_resource type="GDScript" id="GDScript_gl4o0"]
+resource_name = "CameraControl"
+script/source = "extends Camera2D
+
+var zoom_speed = 4
+var min_zoom = 2
+var max_zoom = 10
+
+var dragging = false
+var last_mouse_position = Vector2()
+var mouse_diff = Vector2()
+
+func _ready():
+	last_mouse_position = get_viewport().get_mouse_position()
+	
+func _process(delta):
+	
+	
+	if Input.is_action_just_pressed(\"ZoomIn\"):
+		zoom.x = lerp(zoom.x, zoom.x - zoom_speed, zoom_speed * delta)
+		zoom.y = lerp(zoom.y, zoom.y - zoom_speed, zoom_speed * delta)
+	elif Input.is_action_just_pressed(\"ZoomOut\"):
+		zoom.x = lerp(zoom.x, zoom.x + zoom_speed, zoom_speed * delta)
+		zoom.y = lerp(zoom.y, zoom.y + zoom_speed, zoom_speed * delta)
+	
+	
+	zoom.x = clamp(zoom.x, min_zoom, max_zoom)
+	zoom.y = clamp(zoom.y, min_zoom, max_zoom)
+	
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):  
+		if not dragging:
+			dragging = true
+			
+			last_mouse_position = get_viewport().get_mouse_position()  
+	
+		if dragging:
+			
+			mouse_diff = get_viewport().get_mouse_position() - last_mouse_position
+			offset -= mouse_diff/2
+			last_mouse_position = get_viewport().get_mouse_position()
+		
+	elif not Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT) and dragging:
+		dragging = false
+"
+
+[node name="overworld" type="Node2D"]
+
+[node name="Combat" parent="." instance=ExtResource("1_qvwqx")]
+visible = false
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(964, 541)
+zoom = Vector2(2, 2)
+script = SubResource("GDScript_gl4o0")
+
+[node name="Inventory" parent="." instance=ExtResource("2_foj7m")]
+
+[node name="TileSpawner" parent="." instance=ExtResource("5_scpxs")]
