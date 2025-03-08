@@ -1,75 +1,17 @@
-[gd_scene load_steps=10 format=3 uid="uid://c8tneiqjwxnx1"]
+[gd_scene load_steps=5 format=3 uid="uid://c8tneiqjwxnx1"]
 
-[ext_resource type="Script" uid="uid://dto20006gf14s" path="res://combat.gd" id="1_d54ak"]
-[ext_resource type="PackedScene" uid="uid://bo51nbtkoyh7a" path="res://Elements/health_element.tscn" id="2_qpjg3"]
+[ext_resource type="Script" uid="uid://dniko7bsxh3t3" path="res://combat.gd" id="1_d54ak"]
+[ext_resource type="Script" uid="uid://ckjhivhvqpgvs" path="res://button.gd" id="2_hqfi1"]
 [ext_resource type="Texture2D" uid="uid://xhvnjc68gp6t" path="res://Player/wunkus.jpg" id="2_y5sla"]
 [ext_resource type="PackedScene" uid="uid://ccnu7s0to31wm" path="res://EnemyLayouts/test_enemy_layout.tscn" id="3_p7wow"]
-[ext_resource type="Texture2D" uid="uid://c3u2v127p8bbp" path="res://InventorySprites/book-1.png" id="5_u30h6"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ga4lu"]
-bg_color = Color(0.332881, 0.332881, 0.332881, 1)
-
-[sub_resource type="Animation" id="Animation_u30h6"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Narration:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_ga4lu"]
-resource_name = "narration_text"
-length = 2.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Narration:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.25, 1.5, 2),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_u30h6"]
-_data = {
-&"RESET": SubResource("Animation_u30h6"),
-&"narration_text": SubResource("Animation_ga4lu")
-}
-
-[node name="Combat" type="Node2D"]
+[node name="Combat" type="Control"]
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("1_d54ak")
 
-[node name="NarrationDelay" type="Timer" parent="."]
-wait_time = 2.5
-one_shot = true
-
-[node name="HealthElement" parent="." instance=ExtResource("2_qpjg3")]
-
-[node name="Narration" type="Label" parent="."]
-z_index = 10
-offset_right = 320.0
-offset_bottom = 23.0
-theme_override_styles/normal = SubResource("StyleBoxFlat_ga4lu")
-text = "test"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_u30h6")
-}
-
 [node name="TempPlayer" type="TextureRect" parent="."]
+layout_mode = 0
 offset_left = 1.0
 offset_top = 53.0
 offset_right = 786.0
@@ -78,6 +20,7 @@ scale = Vector2(0.2, 0.2)
 texture = ExtResource("2_y5sla")
 
 [node name="BonusTurnBar" type="ProgressBar" parent="."]
+layout_mode = 0
 offset_left = 162.0
 offset_top = 101.0
 offset_right = 171.0
@@ -88,28 +31,39 @@ fill_mode = 3
 show_percentage = false
 
 [node name="PlayerHpBar" type="ProgressBar" parent="."]
+layout_mode = 0
 offset_top = 153.0
 offset_right = 160.0
 offset_bottom = 180.0
 value = 50.0
+show_percentage = false
 
 [node name="CombatBackground" type="TextureRect" parent="."]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
+[node name="EnemySpawnSpot" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 200.0
+offset_top = 80.0
+offset_right = 200.0
+offset_bottom = 80.0
+
+[node name="TestEnemyLayout" parent="EnemySpawnSpot" instance=ExtResource("3_p7wow")]
+
 [node name="TempBulletCounter" type="Label" parent="."]
-offset_top = 13.0
+layout_mode = 0
 offset_right = 89.0
-offset_bottom = 40.0
+offset_bottom = 46.0
 text = "ammo"
 
 [node name="TempLoadedBulletCounter" type="Label" parent="."]
-offset_top = 29.0
-offset_right = 107.0
-offset_bottom = 52.0
+layout_mode = 0
+offset_top = 20.0
+offset_right = 89.0
+offset_bottom = 66.0
 text = "loaded ammo"
-
-[node name="TestEnemyLayout" parent="." instance=ExtResource("3_p7wow")]
 
 [node name="Options" type="Control" parent="."]
 layout_mode = 3
@@ -118,55 +72,43 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Gun" type="Button" parent="Options"]
-z_index = 1
 layout_mode = 2
 offset_left = 176.0
 offset_top = 96.0
 offset_right = 226.0
 offset_bottom = 127.0
 text = "Gun"
+script = ExtResource("2_hqfi1")
 
 [node name="Chant" type="Button" parent="Options"]
-z_index = 1
 layout_mode = 2
-offset_left = 256.0
+offset_left = 176.0
 offset_top = 131.0
-offset_right = 311.0
+offset_right = 219.0
 offset_bottom = 162.0
 text = "Chant"
+script = ExtResource("2_hqfi1")
 
 [node name="Items" type="Button" parent="Options"]
-z_index = 1
 layout_mode = 0
 offset_left = 229.0
 offset_top = 96.0
 offset_right = 311.0
 offset_bottom = 127.0
 text = "Items"
+script = ExtResource("2_hqfi1")
 
 [node name="Melee" type="Button" parent="Options"]
-z_index = 1
 layout_mode = 0
-offset_left = 176.0
+offset_left = 235.0
 offset_top = 131.0
-offset_right = 252.0
+offset_right = 311.0
 offset_bottom = 162.0
 text = "Melee"
-
-[node name="MeleeBar" type="ProgressBar" parent="Options/Melee"]
-z_index = -5
-layout_mode = 0
-offset_left = 1.0
-offset_top = 2.0
-offset_right = 76.0
-offset_bottom = 29.0
-max_value = 2.0
-value = 1.0
-show_percentage = false
+script = ExtResource("2_hqfi1")
 
 [node name="GunOptions" type="Control" parent="."]
 visible = false
-layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
@@ -178,6 +120,7 @@ offset_top = 96.0
 offset_right = 219.0
 offset_bottom = 127.0
 text = "Kill"
+script = ExtResource("2_hqfi1")
 
 [node name="Pass" type="Button" parent="GunOptions"]
 layout_mode = 2
@@ -186,6 +129,7 @@ offset_top = 131.0
 offset_right = 219.0
 offset_bottom = 162.0
 text = "Pass"
+script = ExtResource("2_hqfi1")
 
 [node name="ShootSelf" type="Button" parent="GunOptions"]
 layout_mode = 0
@@ -194,6 +138,7 @@ offset_top = 96.0
 offset_right = 310.0
 offset_bottom = 127.0
 text = "ShootSelf"
+script = ExtResource("2_hqfi1")
 
 [node name="Back" type="Button" parent="GunOptions"]
 layout_mode = 0
@@ -202,15 +147,7 @@ offset_top = 131.0
 offset_right = 309.0
 offset_bottom = 162.0
 text = "Go Back"
-
-[node name="TextureRect" type="TextureRect" parent="."]
-visible = false
-z_index = -1
-offset_left = 170.0
-offset_top = 90.0
-offset_right = 314.0
-offset_bottom = 174.0
-texture = ExtResource("5_u30h6")
+script = ExtResource("2_hqfi1")
 
 [connection signal="pressed" from="Options/Gun" to="." method="_on_gun_pressed"]
 [connection signal="pressed" from="Options/Chant" to="." method="_on_chant_pressed"]

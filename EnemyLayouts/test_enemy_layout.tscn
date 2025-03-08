@@ -1,10 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://ccnu7s0to31wm"]
 
-[ext_resource type="Script" uid="uid://di82thfog2s7n" path="res://EnemyLayouts/test_enemy_layout.gd" id="1_3njlf"]
+[ext_resource type="Script" uid="uid://g2xyo8sja3jo" path="res://EnemyLayouts/test_enemy_layout.gd" id="1_3njlf"]
 
 [node name="TestEnemyLayout" type="Node2D"]
 script = ExtResource("1_3njlf")
-
-[node name="MoveDelay" type="Timer" parent="."]
-wait_time = 2.5
-one_shot = true
