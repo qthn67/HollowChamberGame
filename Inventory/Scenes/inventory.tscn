@@ -1,7 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://cecwfav6dle0b"]
+[gd_scene load_steps=6 format=3 uid="uid://0it7ldjor7up"]
 
 [ext_resource type="Texture2D" uid="uid://cpfsx3so0juwc" path="res://Assets/blue background.jpg" id="1_spuu0"]
-[ext_resource type="PackedScene" uid="uid://c22ooclwatdgp" path="res://Inventory/inventory_slots.tscn" id="1_uov6c"]
+[ext_resource type="PackedScene" path="res://Inventory/Scenes/inventory_slots.tscn" id="1_uov6c"]
 [ext_resource type="Texture2D" uid="uid://dfqur1g2usav8" path="res://Assets/Passive.png" id="2_2aw4r"]
 [ext_resource type="Texture2D" uid="uid://dv1ppt6lvcujh" path="res://Assets/Active.png" id="3_spuu0"]
 [ext_resource type="Texture2D" uid="uid://c54uxaywxeu20" path="res://Assets/Bullets.png" id="4_nxe83"]

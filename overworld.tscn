@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://e48aaxawblo2"]
+[gd_scene load_steps=23 format=3 uid="uid://e48aaxawblo2"]
 
 [ext_resource type="AudioStream" uid="uid://d0vtqd4n4amb1" path="res://grid_music.mp3" id="1_8ruww"]
 [ext_resource type="PackedScene" uid="uid://c8tneiqjwxnx1" path="res://combat.tscn" id="1_qvwqx"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://cwc41ai5d6o1x" path="res://eventTiles.png" id="10_hnx86"]
 [ext_resource type="Texture2D" uid="uid://cwpmsvsw5mte6" path="res://TempDialogueBox.png" id="14_pwyxv"]
 [ext_resource type="Script" uid="uid://dsq0s684td8i0" path="res://box.gd" id="15_hypey"]
+[ext_resource type="PackedScene" uid="uid://0it7ldjor7up" path="res://Inventory/Scenes/inventory.tscn" id="15_y687k"]
 
 [sub_resource type="GDScript" id="GDScript_gl4o0"]
 resource_name = "CameraControl"
@@ -1148,6 +1149,7 @@ func _process(delta: float) -> void:
 font_size = 100
 
 [node name="overworld" type="Node2D"]
+position = Vector2(-1, 0)
 
 [node name="Music" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("1_8ruww")
@@ -1163,7 +1165,7 @@ script = ExtResource("2_1v1rb")
 [node name="Combat" parent="." node_paths=PackedStringArray("black_transition", "player") instance=ExtResource("1_qvwqx")]
 visible = false
 z_index = 3
-position = Vector2(632, 357)
+position = Vector2(645, 359)
 scale = Vector2(2, 2)
 black_transition = NodePath("../Camera2D/BlackTransition")
 player = NodePath("../TileSpawner/Node2D2/Player")
@@ -1181,6 +1183,7 @@ max_offset = Vector2(1, 1)
 follow_node = NodePath("../TileSpawner/Node2D2/Player")
 
 [node name="BlackTransition" type="Node2D" parent="Camera2D" node_paths=PackedStringArray("player", "camera")]
+visible = false
 script = ExtResource("2_a8kb4")
 player = NodePath("../../TileSpawner/Node2D2/Player")
 camera = NodePath("..")
@@ -1295,3 +1298,10 @@ label_settings = SubResource("LabelSettings_1g8qp")
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
+
+[node name="InventoryUI" parent="." instance=ExtResource("15_y687k")]
+offset_left = 882.0
+offset_top = 367.0
+offset_right = 965.0
+offset_bottom = 525.0
+scale = Vector2(2, 2)

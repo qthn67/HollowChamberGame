@@ -111,6 +111,7 @@ offset_bottom = 52.0
 text = "loaded ammo"
 
 [node name="TestEnemyLayout" parent="." instance=ExtResource("3_p7wow")]
+selected_layout = 2
 
 [node name="Options" type="Control" parent="."]
 layout_mode = 3
