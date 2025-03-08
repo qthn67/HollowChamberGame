@@ -47,11 +47,9 @@ func _ready():
 
 
 func _process(delta):
-	if(Player.fighting): ### IN COMBAT
-		zoom = Vector2(3,3)
-		offset = Vector2(0,0)
-		position = Vector2(964,541)
-	elif(!Player.fighting): ###OUTSIDE OF COMBAT
+	print(position)
+	###OUTSIDE OF COMBAT
+	if(!Player.fighting or !Player.fight_time):
 		if(Player.snap_back == true):
 			camera_reset_tween = create_tween()  # Create a new tween if needed
 			camera_reset_tween.tween_property(self, \"offset\", Vector2(0, 0), 0.1)
@@ -100,6 +98,10 @@ func _process(delta):
 		if trauma: # If the camera is currently shaking
 			trauma = max(trauma - decay * delta, 0) # Decay the shake strength
 			shake() # Shake the camera
+	else: ### IN COMBAT
+		zoom = Vector2(3,3)
+		offset = Vector2(0,0)
+		position = Vector2(964,541)
 	
 	
 		
@@ -1157,11 +1159,10 @@ decay = 3.0
 max_offset = Vector2(1, 1)
 follow_node = NodePath("../TileSpawner/Node2D2/Player")
 
-[node name="BlackTransition" type="Node2D" parent="Camera2D" node_paths=PackedStringArray("player", "camera")]
+[node name="BlackTransition" type="Node2D" parent="Camera2D" node_paths=PackedStringArray("player")]
 visible = false
 script = ExtResource("2_a8kb4")
 player = NodePath("../../TileSpawner/Node2D2/Player")
-camera = NodePath("..")
 
 [node name="Sprite2D" type="Sprite2D" parent="Camera2D/BlackTransition"]
 modulate = Color(0, 0, 0, 1)
@@ -1172,10 +1173,9 @@ texture = ExtResource("2_ayd34")
 
 [node name="Inventory" parent="." instance=ExtResource("2_foj7m")]
 
-[node name="TileSpawner" parent="." node_paths=PackedStringArray("ground_tiles", "event_tiles", "player") instance=ExtResource("5_scpxs")]
+[node name="TileSpawner" parent="." node_paths=PackedStringArray("ground_tiles", "event_tiles") instance=ExtResource("5_scpxs")]
 ground_tiles = NodePath("GroundTiles")
 event_tiles = NodePath("EventTiles")
-player = NodePath("Node2D2/Player")
 
 [node name="GroundTiles" type="TileMap" parent="TileSpawner" node_paths=PackedStringArray("TileSpawner", "EventTiles")]
 tile_set = SubResource("TileSet_1m1so")

@@ -1,22 +1,26 @@
 extends Node2D
 @export var ground_tiles: TileMap
 @export var event_tiles: TileMap
+@export var player: CharacterBody2D
 
 var location = Vector2i(30,17)
 var atlas = Vector2i(0,0)
 var tile_id = 1
 
-var lifetime: int = 5
+var lifetime: int = 6
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var source_marker = marker.new(ground_tiles, location, tile_id, 0, atlas, lifetime, event_tiles)
-	
-	await get_tree().create_timer(0.1).timeout
-	
-	for x in ground_tiles.ground_marker_locations:
-		check_dead_end(x, ground_tiles, event_tiles)
+		visible = true
+		var source_marker = marker.new(ground_tiles, location, tile_id, 0, atlas, lifetime, event_tiles)
+		
+		await get_tree().create_timer(0.1).timeout
+		
+		for x in ground_tiles.ground_marker_locations:
+			check_dead_end(x, ground_tiles, event_tiles)
+			
+			
 	
 	
 	
@@ -24,6 +28,11 @@ func _ready() -> void:
 	# ground_tiles.ground_marker_locations.clear()
 	# _ready()
 	
+func _process(delta: float) -> void:
+	if(!player.fighting):
+		visible = true
+	else:
+		visible = false
 	
 	
 func check_dead_end(tile_position : Vector2i, ground_tiles : TileMap, item_tilemap : TileMap):

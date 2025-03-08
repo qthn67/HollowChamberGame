@@ -3,7 +3,7 @@ extends TileMap
 @export var ground_tiles: TileMap
 
 var items = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(2, 0), Vector2i(2, 2)]
-var weights = [0.1, 0.1, 0.1, 0.7]  # Adjust as needed
+var weights = [0.5, 0.2, 0.1, 0.2]  # Adjust as needed
 var current_position = Vector2i(0,0)
 
 
