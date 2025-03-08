@@ -32,7 +32,7 @@ func _ready() -> void:
 				event_counts[chosen_event] += 1
 			else:
 				if(get_cell_atlas_coords(0, current_position) == Vector2i(-1,-1)):
-					set_cell(0, current_position, 2, Vector2i(1,0))
+					set_cell(0, current_position, 2, Vector2i(-1,-1))
 
 
 func weighted_random(weights: Array) -> int:
