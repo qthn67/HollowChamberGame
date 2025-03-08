@@ -1,5 +1,8 @@
 extends Node2D
 
+@export var black_transition: Node2D
+@export var player: CharacterBody2D
+
 @onready var temp_bullet_counter = $TempBulletCounter
 @onready var temp_loaded_bullet_counter = $TempLoadedBulletCounter
 
@@ -120,6 +123,23 @@ func apply_status_effect(e_name: String, duration: int):
 		apply_status(effect)
 			
 func process_turn():
+	
+	if(player.fighting):
+		if (Input.is_action_just_pressed("debug1") and !black_transition.combat_leave):
+			# print("enter trans: ", black_transition.enter_trans)
+			# print("exit trans: ", black_transition.exit_trans)
+			black_transition.combat_leave = true
+		if (black_transition.combat_leave):
+			black_transition.combat_leave = true
+			black_transition.enter_trans = false
+			black_transition.exit_trans = true
+			await get_tree().create_timer(2).timeout
+			
+			player.fighting = false
+			black_transition.combat_leave = false
+			black_transition.enter_trans = true
+			black_transition.exit_trans = false
+	
 	var active_effects = []
 	concussed = false
 	silenced = false
@@ -171,6 +191,7 @@ func end_of_turn():
 			left_melee_hits = 2
 		elif player_ammo == 0:
 			left_melee_hits = 2
+		
 		
 	await test_enemy_layout.enemy_turn()
 	process_turn()

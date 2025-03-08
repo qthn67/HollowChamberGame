@@ -4,7 +4,7 @@ extends CharacterBody2D
 @export var event_tiles: TileMap
 @onready var tween = $Tween  
 @export var black_transition: Node2D
-@export var combat: Control
+@export var combat: Node2D
 @export var camera: Camera2D
 @export var music: AudioStreamPlayer2D
 @export var move_sfx: AudioStreamPlayer2D
