@@ -2,19 +2,19 @@
 
 [ext_resource type="AudioStream" uid="uid://d0vtqd4n4amb1" path="res://grid_music.mp3" id="1_8ruww"]
 [ext_resource type="PackedScene" uid="uid://c8tneiqjwxnx1" path="res://combat.tscn" id="1_qvwqx"]
-[ext_resource type="Script" uid="uid://dlybqlnqgf3m6" path="res://move_sfx.gd" id="2_1v1rb"]
-[ext_resource type="Script" uid="uid://cx2npgb6qfaj2" path="res://black_transition.gd" id="2_a8kb4"]
+[ext_resource type="Script" path="res://move_sfx.gd" id="2_1v1rb"]
+[ext_resource type="Script" path="res://black_transition.gd" id="2_a8kb4"]
 [ext_resource type="Texture2D" uid="uid://bxv6q85s2bfio" path="res://TempGroundTexture.png" id="2_ayd34"]
 [ext_resource type="PackedScene" uid="uid://dxybk47aru1rj" path="res://inventory.tscn" id="2_foj7m"]
 [ext_resource type="Texture2D" uid="uid://c2ajro7gbm3oo" path="res://testTilemap.png" id="4_tfuja"]
 [ext_resource type="Texture2D" uid="uid://oxa6xa7kmppl" path="res://ground_tiles_level1.png" id="5_65etl"]
 [ext_resource type="PackedScene" uid="uid://c1vxetm2n4erh" path="res://tileSpawner.tscn" id="5_scpxs"]
-[ext_resource type="Script" uid="uid://b2pxg0fjiq87t" path="res://event_placement.gd" id="7_ffmtu"]
-[ext_resource type="Script" uid="uid://mnpnlshlevy5" path="res://player_movement.gd" id="8_7s7a4"]
+[ext_resource type="Script" path="res://event_placement.gd" id="7_ffmtu"]
+[ext_resource type="Script" path="res://player_movement.gd" id="8_7s7a4"]
 [ext_resource type="Texture2D" uid="uid://c3kfkrqfs4hv7" path="res://TempPlayer.png" id="9_lhpgt"]
 [ext_resource type="Texture2D" uid="uid://cwc41ai5d6o1x" path="res://eventTiles.png" id="10_hnx86"]
 [ext_resource type="Texture2D" uid="uid://cwpmsvsw5mte6" path="res://TempDialogueBox.png" id="14_pwyxv"]
-[ext_resource type="Script" uid="uid://dsq0s684td8i0" path="res://box.gd" id="15_hypey"]
+[ext_resource type="Script" path="res://box.gd" id="15_hypey"]
 
 [sub_resource type="GDScript" id="GDScript_gl4o0"]
 resource_name = "CameraControl"
@@ -1112,7 +1112,6 @@ texture_region_size = Vector2i(32, 32)
 2:0/0 = 0
 0:1/0 = 0
 1:1/0 = 0
-2:1/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_1m1so"]
 tile_size = Vector2i(32, 32)
@@ -1161,7 +1160,7 @@ script = ExtResource("2_1v1rb")
 
 [node name="eventSFX" type="AudioStreamPlayer2D" parent="."]
 
-[node name="Combat" parent="." node_paths=PackedStringArray("black_transition", "player") instance=ExtResource("1_qvwqx")]
+[node name="Combat" parent="." instance=ExtResource("1_qvwqx")]
 visible = false
 z_index = 3
 offset_left = 650.0
@@ -1169,8 +1168,6 @@ offset_top = 358.0
 offset_right = 650.0
 offset_bottom = 358.0
 scale = Vector2(2, 2)
-black_transition = NodePath("../Camera2D/BlackTransition")
-player = NodePath("../TileSpawner/Node2D2/Player")
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("Player", "black_transition", "tile_spawner", "follow_node")]
 position = Vector2(964, 541)
@@ -1185,6 +1182,7 @@ max_offset = Vector2(1, 1)
 follow_node = NodePath("../TileSpawner/Node2D2/Player")
 
 [node name="BlackTransition" type="Node2D" parent="Camera2D" node_paths=PackedStringArray("player", "camera")]
+visible = false
 script = ExtResource("2_a8kb4")
 player = NodePath("../../TileSpawner/Node2D2/Player")
 camera = NodePath("..")
@@ -1248,48 +1246,30 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Box" type="Sprite2D" parent="UserInterface/Control" node_paths=PackedStringArray("player", "choice_label")]
+[node name="Box" type="Sprite2D" parent="UserInterface/Control" node_paths=PackedStringArray("player", "child_node")]
 position = Vector2(964, -328)
 script = ExtResource("15_hypey")
 player = NodePath("../../../TileSpawner/Node2D2/Player")
-choice_label = NodePath("ChoiceLabel")
+child_node = NodePath("Label")
 
 [node name="Sprite2D" type="Sprite2D" parent="UserInterface/Control/Box"]
 scale = Vector2(10, 10)
 texture = ExtResource("14_pwyxv")
 
-[node name="ItemLabel" type="Label" parent="UserInterface/Control/Box"]
+[node name="Label" type="Label" parent="UserInterface/Control/Box"]
 modulate = Color(0, 0, 0, 1)
 anchors_preset = -1
 anchor_left = -2.375
 anchor_top = -1.05
 anchor_right = 14.95
 anchor_bottom = 8.675
-offset_left = -1969.63
-offset_top = -850.95
-offset_right = -1342.95
-offset_bottom = -443.675
+offset_left = -330.625
+offset_top = -224.95
+offset_right = 296.05
+offset_bottom = 182.325
 text = "You got:
 
 nothing haha"
-label_settings = SubResource("LabelSettings_1g8qp")
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="ChoiceLabel" type="Label" parent="UserInterface/Control/Box"]
-modulate = Color(0, 0, 0, 1)
-anchors_preset = -1
-anchor_left = -2.375
-anchor_top = -1.04999
-anchor_right = 246.95
-anchor_bottom = 137.675
-offset_left = -2169.63
-offset_top = -1461.95
-offset_right = -1391.95
-offset_bottom = -1054.68
-text = "nothing happened
-lmao"
 label_settings = SubResource("LabelSettings_1g8qp")
 horizontal_alignment = 1
 vertical_alignment = 1

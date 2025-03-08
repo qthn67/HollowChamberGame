@@ -1,27 +1,22 @@
-[gd_scene load_steps=23 format=3 uid="uid://ce75oowc2x6cm"]
+[gd_scene load_steps=18 format=3 uid="uid://ce75oowc2x6cm"]
 
-[ext_resource type="AudioStream" uid="uid://d0vtqd4n4amb1" path="res://grid_music.mp3" id="1_8ruww"]
 [ext_resource type="PackedScene" uid="uid://c8tneiqjwxnx1" path="res://combat.tscn" id="1_qvwqx"]
-[ext_resource type="Script" uid="uid://dlybqlnqgf3m6" path="res://move_sfx.gd" id="2_1v1rb"]
-[ext_resource type="Script" uid="uid://cx2npgb6qfaj2" path="res://black_transition.gd" id="2_a8kb4"]
+[ext_resource type="Script" path="res://black_transition.gd" id="2_a8kb4"]
 [ext_resource type="Texture2D" uid="uid://bxv6q85s2bfio" path="res://TempGroundTexture.png" id="2_ayd34"]
 [ext_resource type="PackedScene" uid="uid://dxybk47aru1rj" path="res://inventory.tscn" id="2_foj7m"]
 [ext_resource type="Texture2D" uid="uid://c2ajro7gbm3oo" path="res://testTilemap.png" id="4_tfuja"]
 [ext_resource type="Texture2D" uid="uid://oxa6xa7kmppl" path="res://ground_tiles_level1.png" id="5_65etl"]
 [ext_resource type="PackedScene" uid="uid://c1vxetm2n4erh" path="res://tileSpawner.tscn" id="5_scpxs"]
-[ext_resource type="Script" uid="uid://b2pxg0fjiq87t" path="res://event_placement.gd" id="7_ffmtu"]
-[ext_resource type="Script" uid="uid://mnpnlshlevy5" path="res://player_movement.gd" id="8_7s7a4"]
+[ext_resource type="Texture2D" uid="uid://bv8t5efdrr862" path="res://event_tiles.png" id="6_l4piw"]
+[ext_resource type="Script" path="res://event_placement.gd" id="7_ffmtu"]
+[ext_resource type="Script" path="res://player_movement.gd" id="8_7s7a4"]
 [ext_resource type="Texture2D" uid="uid://c3kfkrqfs4hv7" path="res://TempPlayer.png" id="9_lhpgt"]
-[ext_resource type="Texture2D" uid="uid://cwc41ai5d6o1x" path="res://eventTiles.png" id="10_hnx86"]
-[ext_resource type="Texture2D" uid="uid://cwpmsvsw5mte6" path="res://TempDialogueBox.png" id="14_pwyxv"]
-[ext_resource type="Script" uid="uid://dsq0s684td8i0" path="res://box.gd" id="15_hypey"]
 
 [sub_resource type="GDScript" id="GDScript_gl4o0"]
 resource_name = "CameraControl"
 script/source = "extends Camera2D
 @export var Player: CharacterBody2D
 @export var black_transition: Node2D
-@export var tile_spawner: Node2D
 
 var zoom_speed = 4
 var min_zoom = 2
@@ -33,8 +28,6 @@ var mouse_diff = Vector2()
 
 var camera_reset_tween = create_tween()
 var transition_zoom = 0.01
-
-var pause_camera = false
 
 
 @export var decay : float = 0.8 # Time it takes to reach 0% of trauma
@@ -54,63 +47,61 @@ func _ready():
 
 
 func _process(delta):
-	if(!pause_camera):
-		if(Player.fighting): ### IN COMBAT
-			zoom = Vector2(3,3)
-			offset = Vector2(0,0)
-			position = Vector2(964,541)
-		elif(!Player.fighting): ###OUTSIDE OF COMBAT
-			if(Player.snap_back == true):
-				camera_reset_tween = create_tween()  # Create a new tween if needed
-				camera_reset_tween.tween_property(self, \"offset\", Vector2(0, 0), 0.1)
-				
-			if(Player.fight_time):
+	print(position)
+	###OUTSIDE OF COMBAT
+	if(!Player.fighting or !Player.fight_time):
+		if(Player.snap_back == true):
+			camera_reset_tween = create_tween()  # Create a new tween if needed
+			camera_reset_tween.tween_property(self, \"offset\", Vector2(0, 0), 0.1)
+			
+		if(Player.fight_time):
+			global_position = follow_node.global_position
+			zoom += (Vector2(10,10) - zoom) * (1.0 - exp(-2 * delta))
+			black_transition.exit_trans = true
+			await get_tree().create_timer(1).timeout
+			Player.fight_time = false
+			
+		if follow_node: # If the follow node exists
 				global_position = follow_node.global_position
-				zoom += (Vector2(10,10) - zoom) * (1.0 - exp(-2 * delta))
-				black_transition.exit_trans = true
-				await get_tree().create_timer(1).timeout
-				Player.fight_time = false
-				
-			if follow_node: # If the follow node exists
-					global_position = follow_node.global_position
+		
+		if(Player.shake == true):
+			add_trauma(10)
+		
+		if(Player.fight_time == false):
+			if Input.is_action_just_pressed(\"ZoomIn\"):
+				zoom.x = lerp(zoom.x, zoom.x - zoom_speed, zoom_speed * delta)
+				zoom.y = lerp(zoom.y, zoom.y - zoom_speed, zoom_speed * delta)
+			elif Input.is_action_just_pressed(\"ZoomOut\"):
+				zoom.x = lerp(zoom.x, zoom.x + zoom_speed, zoom_speed * delta)
+				zoom.y = lerp(zoom.y, zoom.y + zoom_speed, zoom_speed * delta)
 			
-			if(Player.shake == true):
-				add_trauma(10)
 			
-			if(Player.fight_time == false):
-				if Input.is_action_just_pressed(\"ZoomIn\"):
-					zoom.x = lerp(zoom.x, zoom.x - zoom_speed, zoom_speed * delta)
-					zoom.y = lerp(zoom.y, zoom.y - zoom_speed, zoom_speed * delta)
-				elif Input.is_action_just_pressed(\"ZoomOut\"):
-					zoom.x = lerp(zoom.x, zoom.x + zoom_speed, zoom_speed * delta)
-					zoom.y = lerp(zoom.y, zoom.y + zoom_speed, zoom_speed * delta)
-				
-				
-				zoom.x = clamp(zoom.x, min_zoom, max_zoom)
-				zoom.y = clamp(zoom.y, min_zoom, max_zoom)
-				
-				if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):  
-					if not dragging:
-						dragging = true
-						
-						last_mouse_position = get_viewport().get_mouse_position()  
-				
-					if dragging:
-						
-						mouse_diff = get_viewport().get_mouse_position() - last_mouse_position
-						offset -= mouse_diff/2
-						last_mouse_position = get_viewport().get_mouse_position()
+			zoom.x = clamp(zoom.x, min_zoom, max_zoom)
+			zoom.y = clamp(zoom.y, min_zoom, max_zoom)
+			
+			if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):  
+				if not dragging:
+					dragging = true
 					
-				elif not Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT) and dragging:
-					dragging = false
+					last_mouse_position = get_viewport().get_mouse_position()  
 			
-			#CAMERA SHAKE STUFF
-			if trauma: # If the camera is currently shaking
-				trauma = max(trauma - decay * delta, 0) # Decay the shake strength
-				shake() # Shake the camera
-	else:
-		camera_reset_tween = create_tween()  # Create a new tween if needed
-		camera_reset_tween.tween_property(self, \"offset\", Vector2(0, 0), 0.1)
+				if dragging:
+					
+					mouse_diff = get_viewport().get_mouse_position() - last_mouse_position
+					offset -= mouse_diff/2
+					last_mouse_position = get_viewport().get_mouse_position()
+				
+			elif not Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT) and dragging:
+				dragging = false
+		
+		#CAMERA SHAKE STUFF
+		if trauma: # If the camera is currently shaking
+			trauma = max(trauma - decay * delta, 0) # Decay the shake strength
+			shake() # Shake the camera
+	else: ### IN COMBAT
+		zoom = Vector2(3,3)
+		offset = Vector2(0,0)
+		position = Vector2(964,541)
 	
 	
 		
@@ -1104,21 +1095,19 @@ texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 1:0/0 = 0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_22hrf"]
-texture = ExtResource("10_hnx86")
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_saeb1"]
+texture = ExtResource("6_l4piw")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
 0:1/0 = 0
-1:1/0 = 0
-2:1/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_1m1so"]
 tile_size = Vector2i(32, 32)
 sources/0 = SubResource("TileSetAtlasSource_2tgm1")
 sources/1 = SubResource("TileSetAtlasSource_atdjv")
-sources/2 = SubResource("TileSetAtlasSource_22hrf")
+sources/2 = SubResource("TileSetAtlasSource_saeb1")
 
 [sub_resource type="GDScript" id="GDScript_pujel"]
 resource_name = "TilePlacement"
@@ -1126,7 +1115,10 @@ script/source = "extends TileMap
 @export var TileSpawner: Node2D
 @export var EventTiles: TileMap
 var ground_marker_locations : Array[Vector2i] = []
-var current_position
+
+
+
+
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -1145,23 +1137,9 @@ func _process(delta: float) -> void:
 	
 "
 
-[sub_resource type="LabelSettings" id="LabelSettings_1g8qp"]
-font_size = 100
-
 [node name="overworld" type="Node2D"]
 
-[node name="Music" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("1_8ruww")
-volume_db = -5.333
-autoplay = true
-
-[node name="moveSFX" type="AudioStreamPlayer2D" parent="."]
-volume_db = -5.333
-script = ExtResource("2_1v1rb")
-
-[node name="eventSFX" type="AudioStreamPlayer2D" parent="."]
-
-[node name="Combat" parent="." node_paths=PackedStringArray("black_transition", "player") instance=ExtResource("1_qvwqx")]
+[node name="Combat" parent="." instance=ExtResource("1_qvwqx")]
 visible = false
 z_index = 3
 offset_left = 650.0
@@ -1169,25 +1147,22 @@ offset_top = 358.0
 offset_right = 650.0
 offset_bottom = 358.0
 scale = Vector2(2, 2)
-black_transition = NodePath("../Camera2D/BlackTransition")
-player = NodePath("../TileSpawner/Node2D2/Player")
 
-[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("Player", "black_transition", "tile_spawner", "follow_node")]
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("Player", "black_transition", "follow_node")]
 position = Vector2(964, 541)
 scale = Vector2(1.01803, 1)
 zoom = Vector2(3, 3)
 script = SubResource("GDScript_gl4o0")
 Player = NodePath("../TileSpawner/Node2D2/Player")
 black_transition = NodePath("BlackTransition")
-tile_spawner = NodePath("../TileSpawner")
 decay = 3.0
 max_offset = Vector2(1, 1)
 follow_node = NodePath("../TileSpawner/Node2D2/Player")
 
-[node name="BlackTransition" type="Node2D" parent="Camera2D" node_paths=PackedStringArray("player", "camera")]
+[node name="BlackTransition" type="Node2D" parent="Camera2D" node_paths=PackedStringArray("player")]
+visible = false
 script = ExtResource("2_a8kb4")
 player = NodePath("../../TileSpawner/Node2D2/Player")
-camera = NodePath("..")
 
 [node name="Sprite2D" type="Sprite2D" parent="Camera2D/BlackTransition"]
 modulate = Color(0, 0, 0, 1)
@@ -1198,10 +1173,9 @@ texture = ExtResource("2_ayd34")
 
 [node name="Inventory" parent="." instance=ExtResource("2_foj7m")]
 
-[node name="TileSpawner" parent="." node_paths=PackedStringArray("ground_tiles", "event_tiles", "player") instance=ExtResource("5_scpxs")]
+[node name="TileSpawner" parent="." node_paths=PackedStringArray("ground_tiles", "event_tiles") instance=ExtResource("5_scpxs")]
 ground_tiles = NodePath("GroundTiles")
 event_tiles = NodePath("EventTiles")
-player = NodePath("Node2D2/Player")
 
 [node name="GroundTiles" type="TileMap" parent="TileSpawner" node_paths=PackedStringArray("TileSpawner", "EventTiles")]
 tile_set = SubResource("TileSet_1m1so")
@@ -1221,7 +1195,7 @@ ground_tiles = NodePath("../GroundTiles")
 
 [node name="Node2D2" type="Node2D" parent="TileSpawner"]
 
-[node name="Player" type="CharacterBody2D" parent="TileSpawner/Node2D2" node_paths=PackedStringArray("tile_spawner", "ground_tiles", "event_tiles", "black_transition", "combat", "camera", "music", "move_sfx", "event_sfx", "event_box")]
+[node name="Player" type="CharacterBody2D" parent="TileSpawner/Node2D2" node_paths=PackedStringArray("tile_spawner", "ground_tiles", "event_tiles", "black_transition", "combat", "camera")]
 motion_mode = 1
 script = ExtResource("8_7s7a4")
 tile_spawner = NodePath("../..")
@@ -1230,67 +1204,8 @@ event_tiles = NodePath("../../EventTiles")
 black_transition = NodePath("../../../Camera2D/BlackTransition")
 combat = NodePath("../../../Combat")
 camera = NodePath("../../../Camera2D")
-music = NodePath("../../../Music")
-move_sfx = NodePath("../../../moveSFX")
-event_sfx = NodePath("../../../eventSFX")
-event_box = NodePath("../../../UserInterface/Control/Box")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TileSpawner/Node2D2/Player"]
 
 [node name="Sprite2D" type="Sprite2D" parent="TileSpawner/Node2D2/Player"]
 texture = ExtResource("9_lhpgt")
-
-[node name="UserInterface" type="CanvasLayer" parent="."]
-
-[node name="Control" type="Control" parent="UserInterface"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Box" type="Sprite2D" parent="UserInterface/Control" node_paths=PackedStringArray("player", "choice_label")]
-position = Vector2(964, -328)
-script = ExtResource("15_hypey")
-player = NodePath("../../../TileSpawner/Node2D2/Player")
-choice_label = NodePath("ChoiceLabel")
-
-[node name="Sprite2D" type="Sprite2D" parent="UserInterface/Control/Box"]
-scale = Vector2(10, 10)
-texture = ExtResource("14_pwyxv")
-
-[node name="ItemLabel" type="Label" parent="UserInterface/Control/Box"]
-modulate = Color(0, 0, 0, 1)
-anchors_preset = -1
-anchor_left = -2.375
-anchor_top = -1.05
-anchor_right = 14.95
-anchor_bottom = 8.675
-offset_left = -1969.63
-offset_top = -850.95
-offset_right = -1342.95
-offset_bottom = -443.675
-text = "You got:
-
-nothing haha"
-label_settings = SubResource("LabelSettings_1g8qp")
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="ChoiceLabel" type="Label" parent="UserInterface/Control/Box"]
-modulate = Color(0, 0, 0, 1)
-anchors_preset = -1
-anchor_left = -2.375
-anchor_top = -1.04999
-anchor_right = 246.95
-anchor_bottom = 137.675
-offset_left = -2169.63
-offset_top = -1461.95
-offset_right = -1391.95
-offset_bottom = -1054.68
-text = "nothing happened
-lmao"
-label_settings = SubResource("LabelSettings_1g8qp")
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
