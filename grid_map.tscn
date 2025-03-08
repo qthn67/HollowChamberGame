@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://bxd7i2r3uwx7f"]
+
+[ext_resource type="PackedScene" uid="uid://c8tneiqjwxnx1" path="res://combat.tscn" id="1_jg21j"]
+
+[sub_resource type="Resource" id="Resource_lq4m8"]
+metadata/__load_path__ = "res://inventory.tscn"
+
+[node name="GridMap" type="Node2D"]
+
+[node name="Combat" parent="." instance=ExtResource("1_jg21j")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(160, 90)
+
+[node name="Inventory" parent="."]
