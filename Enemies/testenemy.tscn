@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://58fw7yrffgly"]
 
 [ext_resource type="Texture2D" uid="uid://btivhlysxoq3k" path="res://Enemies/cat.jpg" id="1_mb00m"]
-[ext_resource type="Script" path="res://Enemies/testenemy.gd" id="1_pnqve"]
+[ext_resource type="Script" uid="uid://c7xq3mrd7bfk6" path="res://Enemies/testenemy.gd" id="1_pnqve"]
 
 [node name="TestEnemy" type="Node2D"]
 script = ExtResource("1_pnqve")
