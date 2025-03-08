@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cw3mdslpvsp5i"]
 
-[ext_resource type="Script" path="res://black_transition.gd" id="1_a65cc"]
+[ext_resource type="Script" uid="uid://cx2npgb6qfaj2" path="res://black_transition.gd" id="1_a65cc"]
 [ext_resource type="Texture2D" uid="uid://bxv6q85s2bfio" path="res://TempGroundTexture.png" id="2_0f8o0"]
 
 [node name="TestScene" type="Node2D"]

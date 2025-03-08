@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://c8tneiqjwxnx1"]
 
-[ext_resource type="Script" path="res://combat.gd" id="1_d54ak"]
-[ext_resource type="Script" path="res://button.gd" id="2_hqfi1"]
+[ext_resource type="Script" uid="uid://dvvyaeynr0qe" path="res://combat.gd" id="1_d54ak"]
+[ext_resource type="Script" uid="uid://ckjhivhvqpgvs" path="res://button.gd" id="2_hqfi1"]
 [ext_resource type="Texture2D" uid="uid://xhvnjc68gp6t" path="res://Player/wunkus.jpg" id="2_y5sla"]
 [ext_resource type="PackedScene" uid="uid://ccnu7s0to31wm" path="res://EnemyLayouts/test_enemy_layout.tscn" id="3_p7wow"]
 
