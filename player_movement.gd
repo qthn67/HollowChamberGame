@@ -38,7 +38,6 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	
 	if (!pause_movement):
 		### OUT OF COMBAT
 		if(!fighting and start_wait_over):

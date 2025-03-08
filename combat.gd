@@ -59,6 +59,22 @@ func battle_start():
 	narrate("Your turn!")
 
 func _process(_delta):
+	if(player.fighting):
+		if (Input.is_action_just_pressed("debug1") and !black_transition.combat_leave):
+			# print("enter trans: ", black_transition.enter_trans)
+			# print("exit trans: ", black_transition.exit_trans)
+			black_transition.combat_leave = true
+		if (black_transition.combat_leave):
+			black_transition.combat_leave = true
+			black_transition.enter_trans = false
+			black_transition.exit_trans = true
+			await get_tree().create_timer(2).timeout
+			
+			player.fighting = false
+			black_transition.combat_leave = false
+			black_transition.enter_trans = true
+			black_transition.exit_trans = false
+	
 #Assign values to bars
 	bonus_turn_bar.value = bonus_turn_amount
 	player_hp_bar.max_value = health_element.max_hp
@@ -123,22 +139,7 @@ func apply_status_effect(e_name: String, duration: int):
 		apply_status(effect)
 			
 func process_turn():
-	
-	if(player.fighting):
-		if (Input.is_action_just_pressed("debug1") and !black_transition.combat_leave):
-			# print("enter trans: ", black_transition.enter_trans)
-			# print("exit trans: ", black_transition.exit_trans)
-			black_transition.combat_leave = true
-		if (black_transition.combat_leave):
-			black_transition.combat_leave = true
-			black_transition.enter_trans = false
-			black_transition.exit_trans = true
-			await get_tree().create_timer(2).timeout
-			
-			player.fighting = false
-			black_transition.combat_leave = false
-			black_transition.enter_trans = true
-			black_transition.exit_trans = false
+
 	
 	var active_effects = []
 	concussed = false
