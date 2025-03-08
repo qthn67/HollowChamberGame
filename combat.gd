@@ -1,4 +1,6 @@
 extends Control
+@export var black_transition: Node2D
+@export var player: CharacterBody2D
 
 @onready var temp_bullet_counter = $TempBulletCounter
 @onready var temp_loaded_bullet_counter = $TempLoadedBulletCounter
@@ -32,7 +34,21 @@ func _process(_delta):
 		else:
 			loaded_bullets = player_ammo
 			player_ammo = 0
-			
+	if(player.fighting):
+		if (Input.is_action_just_pressed("debug1") and !black_transition.combat_leave):
+			# print("enter trans: ", black_transition.enter_trans)
+			# print("exit trans: ", black_transition.exit_trans)
+			black_transition.combat_leave = true
+		if (black_transition.combat_leave):
+			black_transition.combat_leave = true
+			black_transition.enter_trans = false
+			black_transition.exit_trans = true
+			await get_tree().create_timer(2).timeout
+			player.fighting = false
+			black_transition.combat_leave = false
+			black_transition.enter_trans = true
+			black_transition.exit_trans = false
+	
 func _on_gun_pressed():
 	can_select_enemy = false
 	

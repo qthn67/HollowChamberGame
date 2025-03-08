@@ -57,8 +57,6 @@ func _process(delta: float) -> void:
 			# print("camera.pause_camera: ", camera.pause_camera)
 			# print("event_box.triggered: ", event_box.triggered)
 			### CHOICE EVENT
-			print ("1: ",stupid_bool1)
-			print ("2: ",stupid_bool2)
 			if event_tiles.get_cell_atlas_coords(0, ground_tiles.local_to_map(position)) == Vector2i(2,0):
 				if(stupid_bool1 == true):
 					stupid_bool2 = true
@@ -70,7 +68,6 @@ func _process(delta: float) -> void:
 					pause_movement = true
 					camera.pause_camera = true
 					event_box.triggered = true
-					print("event_box.triggered: ",event_box.triggered)
 					
 				if(event_box.moving_up == true and stupid_bool1 == false):
 					event_tiles.set_cell(0, ground_tiles.local_to_map(position), 1, Vector2i(-1,-1))
@@ -88,6 +85,7 @@ func _process(delta: float) -> void:
 				
 			### BOSS FIGHT
 			if event_tiles.get_cell_atlas_coords(0, ground_tiles.local_to_map(position)) == Vector2i(0,1):
+				print("test")
 				shake = true
 				pause_movement = true
 				event_sfx.pitch_scale = 0.7
@@ -121,10 +119,58 @@ func _process(delta: float) -> void:
 				combat.visible = true
 			shake = false
 				### ITEM GET
+			if event_tiles.get_cell_atlas_coords(0, ground_tiles.local_to_map(position)) == Vector2i(0,0):
+				event_sfx.stream = preload("res://item.mp3")
+				event_sfx.play()
+				if(stupid_bool1 == true):
+					stupid_bool2 = true
+				if(toggle_choice == false):
+					toggle_choice = true
+					await get_tree().create_timer(0.15).timeout
+					pause_movement = true
+					camera.pause_camera = true
+					event_box.triggered = true
+					print("event_box.triggered: ",event_box.triggered)
+					
+				if(event_box.moving_up == true and stupid_bool1 == false):
+					event_tiles.set_cell(0, ground_tiles.local_to_map(position), 1, Vector2i(-1,-1))
+					event_box.moving_up == false
+					pause_movement = false
+					camera.pause_camera = false
+					event_box.triggered = false
+					toggle_choice = false
+					stupid_bool1 = true
+				else:
+					stupid_bool1 = false
+					stupid_bool2 = false
+					camera.pause_camera = false
+					
+			### BULLETS GET
 			if event_tiles.get_cell_atlas_coords(0, ground_tiles.local_to_map(position)) == Vector2i(1,1):
-				# pause_movement = true
-				# camera.pause_camera = true
-				pass
+				event_sfx.stream = preload("res://bullet.mp3")
+				event_sfx.play()
+				if(stupid_bool1 == true):
+					stupid_bool2 = true
+				if(toggle_choice == false):
+					toggle_choice = true
+					await get_tree().create_timer(0.15).timeout
+					pause_movement = true
+					camera.pause_camera = true
+					event_box.triggered = true
+					print("event_box.triggered: ",event_box.triggered)
+					
+				if(event_box.moving_up == true and stupid_bool1 == false):
+					event_tiles.set_cell(0, ground_tiles.local_to_map(position), 1, Vector2i(-1,-1))
+					event_box.moving_up == false
+					pause_movement = false
+					camera.pause_camera = false
+					event_box.triggered = false
+					toggle_choice = false
+					stupid_bool1 = true
+				else:
+					stupid_bool1 = false
+					stupid_bool2 = false
+					camera.pause_camera = false
 			
 			
 			#UP

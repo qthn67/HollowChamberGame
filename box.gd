@@ -27,7 +27,6 @@ func _process(delta: float) -> void:
 		triggered = true
 	
 	if(triggered):
-		print("this should output on the second time")
 		player.stupid_bool1 == false
 		player.stupid_bool2 == false
 		triggered = false

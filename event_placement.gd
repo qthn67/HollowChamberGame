@@ -2,9 +2,9 @@ extends TileMap
 @export var tile_spawner: Node2D
 @export var ground_tiles: TileMap
 
-var events = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(2, 0), Vector2i(1,1)] # atlas coords for each tile
-var weights = [0, 0, 1,0]  # Adjust as needed
-var max_capacities = [5, 30, 5, 100, 12]
+var events = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(2, 0), Vector2i(1,1), Vector2i(2,1)] # atlas coords for each tile
+var weights = [1, 1, 1, 1, 1]  # Adjust as needed
+var max_capacities = [3, 30, 3, 5, 10]
 var event_counts = [0, 0, 0, 0, 0]
 var current_position = Vector2i(0,0)
 
@@ -14,20 +14,25 @@ func _ready() -> void:
 	await get_tree().create_timer(0.01).timeout
 	
 	ground_tiles.ground_marker_locations.shuffle()
-	for x in ground_tiles.ground_marker_locations:
+	for current_tile in ground_tiles.ground_marker_locations:
 		#current_position = ground_tiles.ground_marker_locations[randi() % ground_tiles.ground_marker_locations.size()]
-		current_position = x
+		current_position = current_tile
 		
 		if(current_position != Vector2i(30,17)):
 			var chosen_event = weighted_random(weights)
 			var current_event = events[chosen_event]
+			
+			# if(current_event == Vector2i(0,0) or current_event == Vector2i(1,1)):
+				# while(get_cell_atlas_coords(0, current_tile + Vector2i(0,-1)) != Vector2i(0,0) or get_cell_atlas_coords(0, current_tile + Vector2i(0,-1)) != Vector2i(1,1) or get_cell_atlas_coords(0, current_tile + Vector2i(0,1)) != Vector2i(0,0) or get_cell_atlas_coords(0, current_tile + Vector2i(0,1)) != Vector2i(1,1) or get_cell_atlas_coords(0, current_tile + Vector2i(-1,0)) != Vector2i(0,0) or get_cell_atlas_coords(0, current_tile + Vector2i(-1,0)) != Vector2i(1,1) or get_cell_atlas_coords(0, current_tile + Vector2i(1,0)) != Vector2i(0,0) or get_cell_atlas_coords(0, current_tile + Vector2i(1,0)) != Vector2i(1,1)):
+					# pass
+			
 			
 			if(event_counts[chosen_event] < max_capacities[chosen_event]):
 				set_cell(0, current_position, 2, current_event)
 				event_counts[chosen_event] += 1
 			else:
 				if(get_cell_atlas_coords(0, current_position) == Vector2i(-1,-1)):
-					set_cell(0, current_position, 2, Vector2i(2,2))
+					set_cell(0, current_position, 2, Vector2i(1,0))
 
 
 func weighted_random(weights: Array) -> int:
