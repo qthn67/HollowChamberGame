@@ -1,11 +1,10 @@
-[gd_scene load_steps=23 format=3 uid="uid://e48aaxawblo2"]
+[gd_scene load_steps=22 format=3 uid="uid://e48aaxawblo2"]
 
 [ext_resource type="AudioStream" uid="uid://d0vtqd4n4amb1" path="res://grid_music.mp3" id="1_8ruww"]
 [ext_resource type="PackedScene" uid="uid://c8tneiqjwxnx1" path="res://combat.tscn" id="1_qvwqx"]
 [ext_resource type="Script" uid="uid://dlybqlnqgf3m6" path="res://move_sfx.gd" id="2_1v1rb"]
 [ext_resource type="Script" uid="uid://cx2npgb6qfaj2" path="res://black_transition.gd" id="2_a8kb4"]
 [ext_resource type="Texture2D" uid="uid://bxv6q85s2bfio" path="res://TempGroundTexture.png" id="2_ayd34"]
-[ext_resource type="PackedScene" uid="uid://dxybk47aru1rj" path="res://inventory.tscn" id="2_foj7m"]
 [ext_resource type="Texture2D" uid="uid://c2ajro7gbm3oo" path="res://testTilemap.png" id="4_tfuja"]
 [ext_resource type="Texture2D" uid="uid://oxa6xa7kmppl" path="res://ground_tiles_level1.png" id="5_65etl"]
 [ext_resource type="PackedScene" path="res://tileSpawner.tscn" id="5_scpxs"]
@@ -1192,8 +1191,6 @@ z_index = 5
 position = Vector2(3.5, 10.5)
 scale = Vector2(20.5938, 12.1563)
 texture = ExtResource("2_ayd34")
-
-[node name="Inventory" parent="." instance=ExtResource("2_foj7m")]
 
 [node name="TileSpawner" parent="." node_paths=PackedStringArray("ground_tiles", "event_tiles", "player") instance=ExtResource("5_scpxs")]
 ground_tiles = NodePath("GroundTiles")
