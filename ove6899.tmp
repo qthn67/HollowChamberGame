@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://ce75oowc2x6cm"]
+[gd_scene load_steps=22 format=3 uid="uid://ce75oowc2x6cm"]
 
 [ext_resource type="AudioStream" uid="uid://d0vtqd4n4amb1" path="res://grid_music.mp3" id="1_8ruww"]
 [ext_resource type="PackedScene" uid="uid://c8tneiqjwxnx1" path="res://combat.tscn" id="1_qvwqx"]
@@ -1144,9 +1144,6 @@ func _process(delta: float) -> void:
 	
 "
 
-[sub_resource type="LabelSettings" id="LabelSettings_1g8qp"]
-font_size = 100
-
 [node name="overworld" type="Node2D"]
 
 [node name="Music" type="AudioStreamPlayer2D" parent="."]
@@ -1220,6 +1217,7 @@ ground_tiles = NodePath("../GroundTiles")
 [node name="Node2D2" type="Node2D" parent="TileSpawner"]
 
 [node name="Player" type="CharacterBody2D" parent="TileSpawner/Node2D2" node_paths=PackedStringArray("tile_spawner", "ground_tiles", "event_tiles", "black_transition", "combat", "camera", "music", "move_sfx", "event_sfx", "event_box")]
+visible = false
 motion_mode = 1
 script = ExtResource("8_7s7a4")
 tile_spawner = NodePath("../..")
@@ -1246,49 +1244,8 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Box" type="Sprite2D" parent="UserInterface/Control" node_paths=PackedStringArray("player", "choice_label")]
+[node name="Box" type="Sprite2D" parent="UserInterface/Control"]
 position = Vector2(964, -328)
-script = ExtResource("15_hypey")
-player = NodePath("../../../TileSpawner/Node2D2/Player")
-choice_label = NodePath("ChoiceLabel")
-
-[node name="Sprite2D" type="Sprite2D" parent="UserInterface/Control/Box"]
 scale = Vector2(10, 10)
 texture = ExtResource("14_pwyxv")
-
-[node name="ItemLabel" type="Label" parent="UserInterface/Control/Box"]
-modulate = Color(0, 0, 0, 1)
-anchors_preset = -1
-anchor_left = -2.375
-anchor_top = -1.05
-anchor_right = 14.95
-anchor_bottom = 8.675
-offset_left = -1969.63
-offset_top = -850.95
-offset_right = -1342.95
-offset_bottom = -443.675
-text = "You got:
-
-nothing haha"
-label_settings = SubResource("LabelSettings_1g8qp")
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="ChoiceLabel" type="Label" parent="UserInterface/Control/Box"]
-modulate = Color(0, 0, 0, 1)
-anchors_preset = -1
-anchor_left = -2.375
-anchor_top = -1.04999
-anchor_right = 246.95
-anchor_bottom = 137.675
-offset_left = -2169.63
-offset_top = -1461.95
-offset_right = -1391.95
-offset_bottom = -1054.68
-text = "nothing happened
-lmao"
-label_settings = SubResource("LabelSettings_1g8qp")
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
+script = ExtResource("15_hypey")
