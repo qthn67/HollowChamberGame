@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://ce75oowc2x6cm"]
+[gd_scene load_steps=23 format=3 uid="uid://e48aaxawblo2"]
 
 [ext_resource type="AudioStream" uid="uid://d0vtqd4n4amb1" path="res://grid_music.mp3" id="1_8ruww"]
 [ext_resource type="PackedScene" uid="uid://c8tneiqjwxnx1" path="res://combat.tscn" id="1_qvwqx"]
@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dxybk47aru1rj" path="res://inventory.tscn" id="2_foj7m"]
 [ext_resource type="Texture2D" uid="uid://c2ajro7gbm3oo" path="res://testTilemap.png" id="4_tfuja"]
 [ext_resource type="Texture2D" uid="uid://oxa6xa7kmppl" path="res://ground_tiles_level1.png" id="5_65etl"]
-[ext_resource type="PackedScene" uid="uid://c1vxetm2n4erh" path="res://tileSpawner.tscn" id="5_scpxs"]
+[ext_resource type="PackedScene" path="res://tileSpawner.tscn" id="5_scpxs"]
 [ext_resource type="Script" uid="uid://b2pxg0fjiq87t" path="res://event_placement.gd" id="7_ffmtu"]
 [ext_resource type="Script" uid="uid://mnpnlshlevy5" path="res://player_movement.gd" id="8_7s7a4"]
 [ext_resource type="Texture2D" uid="uid://c3kfkrqfs4hv7" path="res://TempPlayer.png" id="9_lhpgt"]
@@ -1161,16 +1161,10 @@ script = ExtResource("2_1v1rb")
 
 [node name="eventSFX" type="AudioStreamPlayer2D" parent="."]
 
-[node name="Combat" parent="." node_paths=PackedStringArray("black_transition", "player") instance=ExtResource("1_qvwqx")]
+[node name="Combat" parent="." instance=ExtResource("1_qvwqx")]
 visible = false
 z_index = 3
-offset_left = 650.0
-offset_top = 358.0
-offset_right = 650.0
-offset_bottom = 358.0
 scale = Vector2(2, 2)
-black_transition = NodePath("../Camera2D/BlackTransition")
-player = NodePath("../TileSpawner/Node2D2/Player")
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("Player", "black_transition", "tile_spawner", "follow_node")]
 position = Vector2(964, 541)
