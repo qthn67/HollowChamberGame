@@ -1,7 +1,7 @@
 extends Node2D
 
 # @export_enum("L1", "L2", "L3") var selected_layout = 0
-var selected_layout = randi_range(0,3)
+var selected_layout: int
 
 @onready var move_delay = $MoveDelay
 
@@ -40,6 +40,10 @@ func apply_layout(layout):
 		0: setup_test_layout()
 		1: setup_layout_1()
 		2: setup_layout_2()
+		
+func kill_all():
+	for x in enemies:
+		x.queue_free()
 
 func spawn_enemy(enemy_scene_path: String, enemy_position: Vector2):
 	var enemy_scene = load(enemy_scene_path) as PackedScene
@@ -47,6 +51,7 @@ func spawn_enemy(enemy_scene_path: String, enemy_position: Vector2):
 		var enemy = enemy_scene.instantiate()
 		enemy.position = enemy_position
 		add_child(enemy)
+		enemies.append(enemy)
 
 func enemy_turn():
 	current_enemy_turn = 0

@@ -27,6 +27,7 @@ offset_bottom = 174.0
 texture = ExtResource("1_spuu0")
 
 [node name="GridContainer" type="GridContainer" parent="NinePatchRect"]
+visible = false
 layout_mode = 1
 offset_top = 8.0
 offset_right = 41.0
@@ -52,6 +53,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="GridContainer2" type="GridContainer" parent="NinePatchRect"]
+visible = false
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -81,6 +83,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="ScrollContainer" type="ScrollContainer" parent="NinePatchRect"]
+visible = false
 layout_mode = 2
 offset_left = 1.0
 offset_top = 137.0
@@ -125,17 +128,30 @@ offset_bottom = 332.0
 grow_horizontal = 2
 grow_vertical = 0
 
+[node name="Label" type="Label" parent="NinePatchRect"]
+layout_mode = 0
+offset_right = 80.0
+offset_bottom = 174.0
+text = "inventory
+was scrapped
+sorry
+
+     :("
+
 [node name="PassiveText" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(22, 3)
 scale = Vector2(0.0830501, 0.0983607)
 texture = ExtResource("2_2aw4r")
 
 [node name="ActiveText" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(65, 3)
 scale = Vector2(0.0714286, 0.090164)
 texture = ExtResource("3_spuu0")
 
 [node name="BulletsText" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(42, 133)
 scale = Vector2(0.0650783, 0.06991)
 texture = ExtResource("4_nxe83")

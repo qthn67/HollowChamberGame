@@ -51,6 +51,8 @@ var bonus_turn_amount : int = 0
 var left_melee_hits : int = 2
 
 var first_time = true
+var boss_start = false
+var round_end = false
 
 func _ready() -> void:
 	battle_start()
@@ -85,6 +87,8 @@ func _process(_delta):
 			black_transition.exit_trans = true
 			#await get_tree().create_timer(1).timeout
 		#await get_tree().create_timer(1).timeout
+		Global.grid_size =3
+		Global.level =1
 		get_tree().change_scene_to_file("res://overworld.tscn")
 	
 	if(!player.pause_movement and health_element.current_hp > 0):
@@ -97,6 +101,8 @@ func _process(_delta):
 		if ((Input.is_action_just_pressed("debug1") or test_enemy_layout.signal_end) and !black_transition.combat_leave):
 			# print("enter trans: ", black_transition.enter_trans)
 			# print("exit trans: ", black_transition.exit_trans)
+			
+			test_enemy_layout.kill_all()
 			test_enemy_layout.done_once = false
 			print("booey")
 			test_enemy_layout.done_once = false
@@ -114,6 +120,13 @@ func _process(_delta):
 			black_transition.combat_leave = false
 			black_transition.enter_trans = true
 			black_transition.exit_trans = false
+			
+			if(boss_start):
+				await get_tree().create_timer(0).timeout
+				Global.grid_size +=1
+				Global.level +=1
+				get_tree().change_scene_to_file("res://overworld.tscn")
+				
 	
 #Assign values to bars
 	bonus_turn_bar.value = bonus_turn_amount

@@ -7,7 +7,7 @@ var location = Vector2i(30,17)
 var atlas = Vector2i(0,0)
 var tile_id = 1
 
-var lifetime: int = 5
+var lifetime: int = Global.grid_size
 
 
 # Called when the node enters the scene tree for the first time.

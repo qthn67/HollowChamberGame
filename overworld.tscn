@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://cx7v5vm716no4"]
+[gd_scene load_steps=30 format=3 uid="uid://cx7v5vm716no4"]
 
 [ext_resource type="AudioStream" uid="uid://c1gisolve2f4o" path="res://grid_music.mp3" id="1_8ruww"]
 [ext_resource type="PackedScene" uid="uid://c8tneiqjwxnx1" path="res://combat.tscn" id="1_qvwqx"]
@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://cwpmsvsw5mte6" path="res://TempDialogueBox.png" id="14_pwyxv"]
 [ext_resource type="Script" path="res://box.gd" id="15_hypey"]
 [ext_resource type="PackedScene" uid="uid://0it7ldjor7up" path="res://Inventory/Scenes/inventory.tscn" id="15_y687k"]
+[ext_resource type="Script" uid="uid://cyxesfjkw7mwh" path="res://label.gd" id="17_6cww0"]
 
 [sub_resource type="GDScript" id="GDScript_gl4o0"]
 resource_name = "CameraControl"
@@ -1154,6 +1155,42 @@ func _process(delta: float) -> void:
 [sub_resource type="LabelSettings" id="LabelSettings_1g8qp"]
 font_size = 100
 
+[sub_resource type="FontFile" id="FontFile_lc4f4"]
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/17/0/ascent = 0.0
+cache/0/17/0/descent = 0.0
+cache/0/17/0/underline_position = 0.0
+cache/0/17/0/underline_thickness = 0.0
+cache/0/17/0/scale = 1.0
+cache/0/18/0/ascent = 0.0
+cache/0/18/0/descent = 0.0
+cache/0/18/0/underline_position = 0.0
+cache/0/18/0/underline_thickness = 0.0
+cache/0/18/0/scale = 1.0
+cache/0/19/0/ascent = 0.0
+cache/0/19/0/descent = 0.0
+cache/0/19/0/underline_position = 0.0
+cache/0/19/0/underline_thickness = 0.0
+cache/0/19/0/scale = 1.0
+cache/0/1/0/ascent = 0.0
+cache/0/1/0/descent = 0.0
+cache/0/1/0/underline_position = 0.0
+cache/0/1/0/underline_thickness = 0.0
+cache/0/1/0/scale = 1.0
+cache/0/100/0/ascent = 0.0
+cache/0/100/0/descent = 0.0
+cache/0/100/0/underline_position = 0.0
+cache/0/100/0/underline_thickness = 0.0
+cache/0/100/0/scale = 1.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_6cww0"]
+font = SubResource("FontFile_lc4f4")
+font_size = 100
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lc4f4"]
 texture = ExtResource("14_lc4f4")
 0:0/size_in_atlas = Vector2i(38, 25)
@@ -1207,8 +1244,8 @@ combat = NodePath(".")
 
 [node name="Sprite2D" type="Sprite2D" parent="Camera2D/BlackTransition"]
 z_index = 5
-position = Vector2(3.5, 10.5)
-scale = Vector2(20.5938, 12.1563)
+position = Vector2(-5.40258, -6)
+scale = Vector2(28.3329, 18.3125)
 texture = ExtResource("2_ayd34")
 
 [node name="TileSpawner" parent="." node_paths=PackedStringArray("ground_tiles", "event_tiles", "player") instance=ExtResource("5_scpxs")]
@@ -1316,6 +1353,16 @@ offset_top = 16.0
 offset_right = -1128.0
 offset_bottom = -885.0
 scale = Vector2(6, 6)
+
+[node name="Label" type="Label" parent="UserInterface"]
+offset_left = 4.0
+offset_top = -19.0
+offset_right = 582.0
+offset_bottom = 115.0
+scale = Vector2(0.69, 0.69)
+text = "(placeholder)"
+label_settings = SubResource("LabelSettings_6cww0")
+script = ExtResource("17_6cww0")
 
 [node name="BGTiles" type="TileMap" parent="."]
 z_index = -5

@@ -15,12 +15,12 @@ func _process(_delta):
 	
 func take_turn():
 	if first_attack == true:
-		combat.narrate("Kitty lunges at you!")
+		combat.narrate("Cultist lunges at you!")
 		combat.health_element.damage(10)
-		combat.apply_status_effect("Asleep",10)
+		# combat.apply_status_effect("Asleep",10)
 		first_attack = false
 	else:
-		combat.narrate("Kitty lunges at you!")
+		combat.narrate("Cultist lunges at you!")
 		combat.health_element.damage(10)
 
 func _on_texture_button_pressed():

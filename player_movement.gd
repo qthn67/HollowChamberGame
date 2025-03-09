@@ -90,6 +90,7 @@ func _process(delta: float) -> void:
 				
 			### BOSS FIGHT
 			if event_tiles.get_cell_atlas_coords(0, ground_tiles.local_to_map(position)) == Vector2i(0,1):
+				combat.boss_start = true
 				print("test")
 				shake = true
 				combat.starting()

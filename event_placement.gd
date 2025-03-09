@@ -2,12 +2,13 @@ extends TileMap
 @export var tile_spawner: Node2D
 @export var ground_tiles: TileMap
 
-var events = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(2, 0), Vector2i(1,1), Vector2i(2,1)] # atlas coords for each tile
-var weights = [1, 1, 1, 1, 1]  # Adjust as needed
-var max_capacities = [3, 30, 3, 5, 10]
-var event_counts = [0, 0, 0, 0, 0]
+var events = [Vector2i(0, 0), Vector2i(1, 0), Vector2i(2, 0), Vector2i(1,1), Vector2i(2,1), Vector2i(0,0)] # atlas coords for each tile
+var weights = [1, 1, 1, 1, 1, 1]  # Adjust as needed
+var max_capacities = [3, 30, 3, 5, 10, 3]
+var event_counts = [0, 0, 0, 0, 0, 0]
 var current_position = Vector2i(0,0)
 
+#this is scrapped
 var bullets = ["regen", "health", "venom", "silence", "curse", "blank", "blaze", "concuss"]
 var bullet_amounts = [0, 0, 0, 0, 0, 0, 0, 0]
 

@@ -15,7 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://bod4ll4ndx6j4" path="res://InventorySprites/ShootSelfDark.png" id="11_3jjqr"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ga4lu"]
-bg_color = Color(0.332881, 0.332881, 0.332881, 1)
+bg_color = Color(0.07, 0.07, 0.07, 0.513726)
 
 [sub_resource type="Animation" id="Animation_u30h6"]
 length = 0.001
