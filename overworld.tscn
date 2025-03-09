@@ -1,6 +1,6 @@
 [gd_scene load_steps=24 format=3 uid="uid://cx7v5vm716no4"]
 
-[ext_resource type="AudioStream" uid="uid://d0vtqd4n4amb1" path="res://grid_music.mp3" id="1_8ruww"]
+[ext_resource type="AudioStream" uid="uid://c1gisolve2f4o" path="res://grid_music.mp3" id="1_8ruww"]
 [ext_resource type="PackedScene" uid="uid://c8tneiqjwxnx1" path="res://combat.tscn" id="1_qvwqx"]
 [ext_resource type="Script" uid="uid://dlybqlnqgf3m6" path="res://move_sfx.gd" id="2_1v1rb"]
 [ext_resource type="Script" uid="uid://cx2npgb6qfaj2" path="res://black_transition.gd" id="2_a8kb4"]
