@@ -1,20 +1,39 @@
-[gd_resource type="Resource" script_class="Inv" load_steps=23 format=3 uid="uid://bbg3waiamh5gr"]
+[gd_resource type="Resource" script_class="Inv" load_steps=27 format=3 uid="uid://bbg3waiamh5gr"]
 
 [ext_resource type="Script" path="res://Inventory/Scripts/inventoy.gd" id="2_j5s0h"]
 [ext_resource type="Script" path="res://InventorySlots.gd" id="2_jtkq5"]
+[ext_resource type="Script" path="res://Inventory/Scripts/inventory_items.gd" id="3_j5s0h"]
+
+[sub_resource type="Resource" id="Resource_vkmug"]
+script = ExtResource("3_j5s0h")
+name = ""
+metadata/_custom_type_script = "uid://dawy5gbk0inyo"
 
 [sub_resource type="Resource" id="Resource_j5s0h"]
 script = ExtResource("2_jtkq5")
+item = SubResource("Resource_vkmug")
 amount = 0
 metadata/_custom_type_script = "uid://cdbvatswq6du6"
+
+[sub_resource type="Resource" id="Resource_np77a"]
+script = ExtResource("3_j5s0h")
+name = ""
+metadata/_custom_type_script = "uid://dawy5gbk0inyo"
 
 [sub_resource type="Resource" id="Resource_jtkq5"]
 script = ExtResource("2_jtkq5")
+item = SubResource("Resource_np77a")
 amount = 0
 metadata/_custom_type_script = "uid://cdbvatswq6du6"
 
+[sub_resource type="Resource" id="Resource_6dlv2"]
+script = ExtResource("3_j5s0h")
+name = ""
+metadata/_custom_type_script = "uid://dawy5gbk0inyo"
+
 [sub_resource type="Resource" id="Resource_7ec12"]
 script = ExtResource("2_jtkq5")
+item = SubResource("Resource_6dlv2")
 amount = 0
 metadata/_custom_type_script = "uid://cdbvatswq6du6"
 

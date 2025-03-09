@@ -8,6 +8,9 @@ var max_capacities = [3, 30, 3, 5, 10]
 var event_counts = [0, 0, 0, 0, 0]
 var current_position = Vector2i(0,0)
 
+var bullets = ["regen", "health", "venom", "silence", "curse", "blank", "blaze", "concuss"]
+var bullet_amounts = [0, 0, 0, 0, 0, 0, 0, 0]
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

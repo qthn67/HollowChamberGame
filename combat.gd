@@ -2,6 +2,7 @@ extends Node2D
 
 @export var black_transition: Node2D
 @export var player: CharacterBody2D
+@export var music: AudioStreamPlayer2D
 
 @onready var temp_bullet_counter = $TempBulletCounter
 @onready var temp_loaded_bullet_counter = $TempLoadedBulletCounter
@@ -49,8 +50,19 @@ var loaded_bullets : int = 6
 var bonus_turn_amount : int = 0
 var left_melee_hits : int = 2
 
+var first_time = true
+
 func _ready() -> void:
 	battle_start()
+	test_enemy_layout.apply_layout(test_enemy_layout.selected_layout)
+
+func starting() -> void:
+	print("READY")
+	if(!first_time):
+		battle_start()
+		test_enemy_layout.apply_layout(test_enemy_layout.selected_layout)
+	else:
+		first_time = false
 	
 func battle_start():
 #fill with functions that reset all the temporary values when the battle restarts
@@ -59,16 +71,45 @@ func battle_start():
 	narrate("Your turn!")
 
 func _process(_delta):
+	# if(loaded_bullets <= 0):
+		# player_ammo -= 6
+		# loaded_bullets = 6
+	
+	
+	if health_element.current_hp <= 0:
+		narrate("player lost")
+		black_transition.combat_leave = true
+		if (black_transition.combat_leave):
+			black_transition.combat_leave = true
+			black_transition.enter_trans = false
+			black_transition.exit_trans = true
+			#await get_tree().create_timer(1).timeout
+		#await get_tree().create_timer(1).timeout
+		get_tree().change_scene_to_file("res://overworld.tscn")
+	
+	if(!player.pause_movement and health_element.current_hp > 0):
+		await get_tree().create_timer(1).timeout
+		visible = false
+		
 	if(player.fighting):
-		if (Input.is_action_just_pressed("debug1") and !black_transition.combat_leave):
+		# print("signal_end: ", test_enemy_layout.signal_end)
+		# print("combat_leave: ", black_transition.combat_leave)
+		if ((Input.is_action_just_pressed("debug1") or test_enemy_layout.signal_end) and !black_transition.combat_leave):
 			# print("enter trans: ", black_transition.enter_trans)
 			# print("exit trans: ", black_transition.exit_trans)
+			test_enemy_layout.done_once = false
+			print("booey")
+			test_enemy_layout.done_once = false
 			black_transition.combat_leave = true
 		if (black_transition.combat_leave):
 			black_transition.combat_leave = true
 			black_transition.enter_trans = false
 			black_transition.exit_trans = true
-			await get_tree().create_timer(2).timeout
+			if(health_element.current_hp > 0):
+				await get_tree().create_timer(2).timeout
+			
+			music.stream_paused = false
+			music.play(0)
 			
 			player.fighting = false
 			black_transition.combat_leave = false
@@ -212,7 +253,7 @@ func end_of_turn():
 func start_new_turn():
 	print(health_element.current_hp)
 	print(health_element.max_hp)
-	if health_element.current_hp == 0:
+	if health_element.current_hp <= 0:
 		narrate("player lost")
 	else:
 		murder.disabled = false

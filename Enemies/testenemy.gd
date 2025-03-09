@@ -1,5 +1,8 @@
 extends Node2D
 
+@export var target_node: NodePath
+@export var text_enemy_layout: Node2D
+
 @onready var health_element: Node2D = $HealthElement
 
 @onready var hp_bar = $EnemyContainer/HpBar
@@ -35,4 +38,5 @@ func _on_texture_button_pressed():
 			combat.bonus_turn_amount += 1
 			queue_free()
 		elif(health_element.current_hp <= 0):
+			
 			queue_free()

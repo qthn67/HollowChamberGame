@@ -12,6 +12,7 @@ extends CharacterBody2D
 
 @export var event_box: Sprite2D
 
+@export var inv: Inv
 
 var shake: bool
 var snap_back = false
@@ -28,6 +29,8 @@ var toggle_choice = false
 var stupid_bool1 = false
 var stupid_bool2 = false
 
+var dead = false
+
 
 func _ready() -> void:
 	visible = true
@@ -38,6 +41,9 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	
+	if(dead):
+		await get_tree().create_timer(1).timeout
 	if (!pause_movement):
 		### OUT OF COMBAT
 		if(!fighting and start_wait_over):
@@ -86,6 +92,7 @@ func _process(delta: float) -> void:
 			if event_tiles.get_cell_atlas_coords(0, ground_tiles.local_to_map(position)) == Vector2i(0,1):
 				print("test")
 				shake = true
+				combat.starting()
 				pause_movement = true
 				event_sfx.pitch_scale = 0.7
 				event_sfx.stream = preload("res://boss_trigger.mp3")
@@ -103,10 +110,10 @@ func _process(delta: float) -> void:
 			### STANDARD FIGHT
 			shake = true
 			if event_tiles.get_cell_atlas_coords(0, ground_tiles.local_to_map(position)) == Vector2i(1,0):
+				combat.starting()
 				pause_movement = true
 				event_sfx.stream = preload("res://boss_trigger.mp3")
 				event_sfx.play()
-				print("test")
 				await get_tree().create_timer(0.5).timeout
 				music.stream_paused = true
 				fight_time = true
@@ -119,61 +126,69 @@ func _process(delta: float) -> void:
 			shake = false
 				### ITEM GET
 			if event_tiles.get_cell_atlas_coords(0, ground_tiles.local_to_map(position)) == Vector2i(0,0):
-				event_sfx.stream = preload("res://item.mp3")
-				event_sfx.play()
-				if(stupid_bool1 == true):
-					stupid_bool2 = true
-				if(toggle_choice == false):
-					toggle_choice = true
-					await get_tree().create_timer(0.15).timeout
-					pause_movement = true
-					camera.pause_camera = true
-					event_box.triggered = true
-					print("event_box.triggered: ",event_box.triggered)
-					
-				if(event_box.moving_up == true and stupid_bool1 == false):
-					event_tiles.set_cell(0, ground_tiles.local_to_map(position), 1, Vector2i(-1,-1))
-					event_box.moving_up == false
-					pause_movement = false
-					camera.pause_camera = false
-					event_box.triggered = false
-					toggle_choice = false
-					stupid_bool1 = true
-				else:
-					stupid_bool1 = false
-					stupid_bool2 = false
-					camera.pause_camera = false
+				animation_finished = false
+				await get_tree().create_timer(0.2).timeout
+				if event_tiles.get_cell_atlas_coords(0, ground_tiles.local_to_map(position)) == Vector2i(0,0):
+					event_sfx.stream = preload("res://item.mp3")
+					event_sfx.play()
+					if(stupid_bool1 == true):
+						stupid_bool2 = true
+					if(toggle_choice == false):
+						toggle_choice = true
+						await get_tree().create_timer(0.15).timeout
+						pause_movement = true
+						camera.pause_camera = true
+						event_box.triggered = true
+						print("event_box.triggered: ",event_box.triggered)
+						
+					if(event_box.moving_up == true and stupid_bool1 == false):
+						animation_finished = true
+						event_tiles.set_cell(0, ground_tiles.local_to_map(position), 1, Vector2i(-1,-1))
+						event_box.moving_up == false
+						pause_movement = false
+						camera.pause_camera = false
+						event_box.triggered = false
+						toggle_choice = false
+						stupid_bool1 = true
+					else:
+						stupid_bool1 = false
+						stupid_bool2 = false
+						camera.pause_camera = false
 					
 			### BULLETS GET
 			if event_tiles.get_cell_atlas_coords(0, ground_tiles.local_to_map(position)) == Vector2i(1,1):
-				event_sfx.stream = preload("res://bullet.mp3")
-				event_sfx.play()
-				if(stupid_bool1 == true):
-					stupid_bool2 = true
-				if(toggle_choice == false):
-					toggle_choice = true
-					await get_tree().create_timer(0.15).timeout
-					pause_movement = true
-					camera.pause_camera = true
-					event_box.triggered = true
-					print("event_box.triggered: ",event_box.triggered)
-					
-				if(event_box.moving_up == true and stupid_bool1 == false):
-					event_tiles.set_cell(0, ground_tiles.local_to_map(position), 1, Vector2i(-1,-1))
-					event_box.moving_up == false
-					pause_movement = false
-					camera.pause_camera = false
-					event_box.triggered = false
-					toggle_choice = false
-					stupid_bool1 = true
-				else:
-					stupid_bool1 = false
-					stupid_bool2 = false
-					camera.pause_camera = false
+				animation_finished = false
+				await get_tree().create_timer(0.2).timeout
+				if event_tiles.get_cell_atlas_coords(0, ground_tiles.local_to_map(position)) == Vector2i(1,1):
+					event_sfx.stream = preload("res://bullet.mp3")
+					event_sfx.play()
+					if(stupid_bool1 == true):
+						stupid_bool2 = true
+					if(toggle_choice == false):
+						toggle_choice = true
+						await get_tree().create_timer(0.15).timeout
+						pause_movement = true
+						camera.pause_camera = true
+						event_box.triggered = true
+						print("event_box.triggered: ",event_box.triggered)
+						
+					if(event_box.moving_up == true and stupid_bool1 == false):
+						animation_finished = true
+						event_tiles.set_cell(0, ground_tiles.local_to_map(position), 1, Vector2i(-1,-1))
+						event_box.moving_up == false
+						pause_movement = false
+						camera.pause_camera = false
+						event_box.triggered = false
+						toggle_choice = false
+						stupid_bool1 = true
+					else:
+						stupid_bool1 = false
+						stupid_bool2 = false
+						camera.pause_camera = false
 			
 			
 			#UP
-			if (Input.is_action_just_pressed("ui_up") and animation_finished == true):
+			if (Input.is_action_just_pressed("ui_up") and animation_finished == true and black_transition.modulate.a < 0):
 				snap_back = true
 				animation_finished = false
 				temp_tile_position = ground_tiles.local_to_map(position)
@@ -200,7 +215,7 @@ func _process(delta: float) -> void:
 				
 			
 			#DOWN
-			elif (Input.is_action_just_pressed("ui_down") and animation_finished == true):
+			elif (Input.is_action_just_pressed("ui_down") and animation_finished == true and black_transition.modulate.a < 0):
 				snap_back = true
 				animation_finished = false
 				temp_tile_position = ground_tiles.local_to_map(position)
@@ -225,7 +240,7 @@ func _process(delta: float) -> void:
 				animation_finished = true
 				snap_back = false
 			#LEFT
-			elif (Input.is_action_just_pressed("ui_left") and animation_finished == true):
+			elif (Input.is_action_just_pressed("ui_left") and animation_finished == true and black_transition.modulate.a < 0):
 				snap_back = true
 				animation_finished = false
 				temp_tile_position = ground_tiles.local_to_map(position)
@@ -250,7 +265,7 @@ func _process(delta: float) -> void:
 				animation_finished = true
 				snap_back = false
 			#RIGHT
-			elif (Input.is_action_just_pressed("ui_right") and animation_finished == true):
+			elif (Input.is_action_just_pressed("ui_right") and animation_finished == true and black_transition.modulate.a < 0):
 				snap_back = true
 				animation_finished = false
 				temp_tile_position = ground_tiles.local_to_map(position)
@@ -281,10 +296,12 @@ func _process(delta: float) -> void:
 			temp_tile_position = ground_tiles.local_to_map(position)
 			if(!cornered):
 				if ((temp_tile_position + Vector2i(0,-1)) not in ground_tiles.ground_marker_locations) and ((temp_tile_position + Vector2i(0,1)) not in ground_tiles.ground_marker_locations) and ((temp_tile_position + Vector2i(-1,0)) not in ground_tiles.ground_marker_locations) and ((temp_tile_position + Vector2i(1,0)) not in ground_tiles.ground_marker_locations):
-					event_tiles.set_cell(0, temp_tile_position, 2, Vector2i(0,1))
-					cornered = true
 					await get_tree().create_timer(0.2).timeout
-					pause_movement = true
+					if ((temp_tile_position + Vector2i(0,-1)) not in ground_tiles.ground_marker_locations) and ((temp_tile_position + Vector2i(0,1)) not in ground_tiles.ground_marker_locations) and ((temp_tile_position + Vector2i(-1,0)) not in ground_tiles.ground_marker_locations) and ((temp_tile_position + Vector2i(1,0)) not in ground_tiles.ground_marker_locations):
+						event_tiles.set_cell(0, temp_tile_position, 2, Vector2i(0,1))
+						cornered = true
+						await get_tree().create_timer(0.2).timeout
+						pause_movement = true
 			shake = false
 		else:
 			visible = false

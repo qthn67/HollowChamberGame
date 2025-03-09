@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://c8tneiqjwxnx1"]
+[gd_scene load_steps=16 format=3 uid="uid://c8tneiqjwxnx1"]
 
 [ext_resource type="Script" uid="uid://dto20006gf14s" path="res://combat.gd" id="1_d54ak"]
 [ext_resource type="PackedScene" uid="uid://bo51nbtkoyh7a" path="res://Elements/health_element.tscn" id="2_qpjg3"]
@@ -9,10 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://b6tqn8fl0lu13" path="res://Inventory/fightBG.png" id="6_fvoc2"]
 [ext_resource type="Texture2D" uid="uid://cstg71pkvrat" path="res://InventorySprites/ItemsDark.png" id="6_px7ba"]
 [ext_resource type="Script" uid="uid://deqjedcimm1gi" path="res://gun.gd" id="6_tt5c4"]
+[ext_resource type="Texture2D" uid="uid://ck68vgsbg82ek" path="res://InventorySprites/GunLight.png" id="7_5pdxm"]
 [ext_resource type="Texture2D" uid="uid://bo5f7b6iu6i6q" path="res://InventorySprites/MeleeDark.png" id="7_tt5c4"]
-[ext_resource type="Texture2D" uid="uid://bj3m4v0dm7shm" path="res://InventorySprites/KillDark.png" id="9_mp23d"]
-[ext_resource type="Texture2D" uid="uid://dhx67eyt3y8kd" path="res://InventorySprites/PassDark.png" id="10_prnnl"]
-[ext_resource type="Texture2D" uid="uid://bod4ll4ndx6j4" path="res://InventorySprites/ShootSelfDark.png" id="11_3jjqr"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ga4lu"]
 bg_color = Color(0.332881, 0.332881, 0.332881, 1)
@@ -54,41 +52,6 @@ _data = {
 &"narration_text": SubResource("Animation_ga4lu")
 }
 
-[sub_resource type="Gradient" id="Gradient_mp23d"]
-colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_prnnl"]
-gradient = SubResource("Gradient_mp23d")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3jjqr"]
-texture = SubResource("GradientTexture2D_prnnl")
-
-[sub_resource type="Gradient" id="Gradient_prnnl"]
-colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_3jjqr"]
-gradient = SubResource("Gradient_prnnl")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0fwoj"]
-texture = SubResource("GradientTexture2D_3jjqr")
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_mp23d"]
-specular_color = Color(0, 0, 0, 1)
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_prnnl"]
-texture = SubResource("CanvasTexture_mp23d")
-modulate_color = Color(0, 0, 0, 1)
-
-[sub_resource type="Gradient" id="Gradient_3jjqr"]
-colors = PackedColorArray(3.85046e-07, 0.631766, 0.281918, 1, 0, 0.728241, 0.387307, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_0fwoj"]
-gradient = SubResource("Gradient_3jjqr")
-fill_from = Vector2(0.517094, 0)
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ku7t1"]
-texture = SubResource("GradientTexture2D_0fwoj")
-
 [node name="Combat" type="Node2D"]
 script = ExtResource("1_d54ak")
 
@@ -123,24 +86,19 @@ texture = ExtResource("3_u30h6")
 stretch_mode = 5
 
 [node name="BonusTurnBar" type="ProgressBar" parent="."]
-offset_left = 155.0
-offset_top = 102.0
-offset_right = 164.0
-offset_bottom = 176.0
-theme_override_styles/background = SubResource("StyleBoxTexture_3jjqr")
-theme_override_styles/fill = SubResource("StyleBoxTexture_0fwoj")
+offset_left = 162.0
+offset_top = 101.0
+offset_right = 171.0
+offset_bottom = 175.0
 max_value = 10.0
 value = 6.0
 fill_mode = 3
 show_percentage = false
 
 [node name="PlayerHpBar" type="ProgressBar" parent="."]
-offset_left = 5.0
 offset_top = 153.0
-offset_right = 149.0
-offset_bottom = 179.0
-theme_override_styles/background = SubResource("StyleBoxTexture_prnnl")
-theme_override_styles/fill = SubResource("StyleBoxTexture_ku7t1")
+offset_right = 160.0
+offset_bottom = 180.0
 value = 50.0
 
 [node name="CombatBackground" type="TextureRect" parent="."]
@@ -171,13 +129,15 @@ offset_bottom = 40.0
 [node name="Gun" type="Button" parent="Options"]
 z_index = 1
 layout_mode = 2
-offset_left = 183.83
-offset_top = 94.255
-offset_right = 233.83
-offset_bottom = 125.255
+offset_left = 186.83
+offset_top = 88.255
+offset_right = 236.83
+offset_bottom = 119.255
 icon = ExtResource("5_ilamk")
 flat = true
 script = ExtResource("6_tt5c4")
+normal_icon = ExtResource("5_ilamk")
+hover_icon = ExtResource("7_5pdxm")
 
 [node name="Chant" type="Button" parent="Options"]
 visible = false
@@ -193,10 +153,10 @@ flat = true
 [node name="Items" type="Button" parent="Options"]
 z_index = 1
 layout_mode = 0
-offset_left = 253.0
-offset_top = 93.255
-offset_right = 299.0
-offset_bottom = 124.255
+offset_left = 276.0
+offset_top = 88.255
+offset_right = 322.0
+offset_bottom = 119.255
 icon = ExtResource("6_px7ba")
 flat = true
 
@@ -211,12 +171,11 @@ icon = ExtResource("7_tt5c4")
 flat = true
 
 [node name="MeleeBar" type="ProgressBar" parent="Options/Melee"]
-visible = false
-z_index = -1
+z_index = -5
 layout_mode = 0
-offset_left = -3.0
+offset_left = 1.0
 offset_top = 2.0
-offset_right = 59.0
+offset_right = 76.0
 offset_bottom = 29.0
 mouse_filter = 2
 max_value = 2.0
@@ -234,42 +193,35 @@ offset_bottom = 40.0
 
 [node name="Murder" type="Button" parent="GunOptions"]
 layout_mode = 2
-offset_left = 183.83
-offset_top = 94.255
-offset_right = 226.83
-offset_bottom = 125.255
-icon = ExtResource("9_mp23d")
-flat = true
+offset_left = 176.0
+offset_top = 96.0
+offset_right = 219.0
+offset_bottom = 127.0
+text = "Kill"
 
 [node name="Pass" type="Button" parent="GunOptions"]
 layout_mode = 2
-offset_left = 187.0
-offset_top = 127.0
-offset_right = 230.0
-offset_bottom = 158.0
-icon = ExtResource("10_prnnl")
-flat = true
+offset_left = 176.0
+offset_top = 131.0
+offset_right = 219.0
+offset_bottom = 162.0
+text = "Pass"
 
 [node name="ShootSelf" type="Button" parent="GunOptions"]
 layout_mode = 0
-offset_left = 239.0
-offset_top = 93.0
-offset_right = 321.0
-offset_bottom = 124.0
-icon = ExtResource("11_3jjqr")
-flat = true
+offset_left = 228.0
+offset_top = 96.0
+offset_right = 310.0
+offset_bottom = 127.0
+text = "ShootSelf"
 
 [node name="Back" type="Button" parent="GunOptions"]
-modulate = Color(0.335416, 0.199029, 0.00607295, 1)
 layout_mode = 0
-offset_left = 259.0
-offset_top = 129.0
-offset_right = 281.0
-offset_bottom = 160.0
-scale = Vector2(1.45, 0.937)
-text = "←"
-flat = true
-text_direction = 1
+offset_left = 227.0
+offset_top = 131.0
+offset_right = 309.0
+offset_bottom = 162.0
+text = "Go Back"
 
 [node name="TextureRect" type="TextureRect" parent="."]
 visible = false
@@ -289,8 +241,8 @@ texture = ExtResource("6_fvoc2")
 
 [node name="Book-1" type="Sprite2D" parent="."]
 z_index = -1
-position = Vector2(240, 130.5)
-scale = Vector2(1.02778, 1.15476)
+position = Vector2(255.5, 124.75)
+scale = Vector2(1.22917, 1.39881)
 texture = ExtResource("5_u30h6")
 
 [connection signal="pressed" from="Options/Gun" to="." method="_on_gun_pressed"]

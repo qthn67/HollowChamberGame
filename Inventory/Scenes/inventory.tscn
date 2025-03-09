@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://0it7ldjor7up"]
+[gd_scene load_steps=7 format=3 uid="uid://0it7ldjor7up"]
 
+[ext_resource type="Script" uid="uid://b6os01h3txo4l" path="res://Inventory/Scripts/inv_ui.gd" id="1_36nja"]
 [ext_resource type="Texture2D" uid="uid://cpfsx3so0juwc" path="res://Assets/blue background.jpg" id="1_spuu0"]
 [ext_resource type="PackedScene" path="res://Inventory/Scenes/inventory_slots.tscn" id="1_uov6c"]
 [ext_resource type="Texture2D" uid="uid://dfqur1g2usav8" path="res://Assets/Passive.png" id="2_2aw4r"]
@@ -16,6 +17,7 @@ offset_right = -237.0
 offset_bottom = -22.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_36nja")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
 self_modulate = Color(1, 0.980392, 1, 1)

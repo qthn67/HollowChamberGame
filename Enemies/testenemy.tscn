@@ -1,8 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://58fw7yrffgly"]
+[gd_scene load_steps=4 format=3 uid="uid://cnfeqc7h5oki4"]
 
-[ext_resource type="Texture2D" uid="uid://btivhlysxoq3k" path="res://Enemies/cat.jpg" id="1_mb00m"]
 [ext_resource type="Script" uid="uid://dybbqhnk7apnu" path="res://Enemies/testenemy.gd" id="1_pnqve"]
 [ext_resource type="PackedScene" uid="uid://bo51nbtkoyh7a" path="res://Elements/health_element.tscn" id="2_xdi4v"]
+[ext_resource type="Texture2D" uid="uid://bct7s6h11l881" path="res://TempBoss.png" id="3_ub2k1"]
 
 [node name="TestEnemy" type="Node2D" groups=["enemy"]]
 script = ExtResource("1_pnqve")
@@ -23,7 +23,7 @@ grow_vertical = 0
 
 [node name="EnemyTexture" type="TextureRect" parent="EnemyContainer"]
 layout_mode = 2
-texture = ExtResource("1_mb00m")
+texture = ExtResource("3_ub2k1")
 expand_mode = 5
 
 [node name="HpBar" type="ProgressBar" parent="EnemyContainer"]
