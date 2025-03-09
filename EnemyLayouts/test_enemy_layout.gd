@@ -1,6 +1,7 @@
 extends Node2D
 
-@export_enum("L1", "L2", "L3") var selected_layout = 0
+# @export_enum("L1", "L2", "L3") var selected_layout = 0
+var selected_layout = randi_range(0,3)
 
 @onready var move_delay = $MoveDelay
 
@@ -34,6 +35,7 @@ func _process(delta: float) -> void:
 		signal_end = false
 
 func apply_layout(layout):
+	selected_layout = randi_range(0,2)
 	match layout:
 		0: setup_test_layout()
 		1: setup_layout_1()
