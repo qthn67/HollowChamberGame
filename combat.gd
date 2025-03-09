@@ -109,7 +109,6 @@ func _process(_delta):
 				await get_tree().create_timer(2).timeout
 			
 			music.stream_paused = false
-			music.play(0)
 			
 			player.fighting = false
 			black_transition.combat_leave = false
