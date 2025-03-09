@@ -1348,10 +1348,10 @@ metadata/_edit_use_anchors_ = true
 
 [node name="InventoryUI" parent="UserInterface" instance=ExtResource("15_y687k")]
 z_index = 6
-offset_left = 706.0
-offset_top = 16.0
-offset_right = -1128.0
-offset_bottom = -885.0
+offset_left = 730.0
+offset_top = 19.0
+offset_right = -1104.0
+offset_bottom = -882.0
 scale = Vector2(6, 6)
 
 [node name="Label" type="Label" parent="UserInterface"]
