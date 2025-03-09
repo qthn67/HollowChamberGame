@@ -1,3 +1,3 @@
 extends Node
 var level = 1
-var grid_size = 3
+var grid_size = 4
