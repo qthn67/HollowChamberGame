@@ -14,10 +14,11 @@
 [ext_resource type="Texture2D" uid="uid://cwc41ai5d6o1x" path="res://eventTiles.png" id="10_hnx86"]
 [ext_resource type="Resource" uid="uid://bbg3waiamh5gr" path="res://Inventory/playerinv.tres" id="12_vnleo"]
 [ext_resource type="Texture2D" uid="uid://cjtj3h6y6w2xd" path="res://Inventory/Items/Untitled (45).png" id="14_lc4f4"]
-[ext_resource type="Texture2D" uid="uid://cwpmsvsw5mte6" path="res://TempDialogueBox.png" id="14_pwyxv"]
-[ext_resource type="Script" path="res://box.gd" id="15_hypey"]
+[ext_resource type="Texture2D" uid="uid://balchbs4iw8xd" path="res://Enemies/TextBox.png" id="15_6cww0"]
+[ext_resource type="Script" uid="uid://dsq0s684td8i0" path="res://box.gd" id="15_hypey"]
 [ext_resource type="PackedScene" uid="uid://0it7ldjor7up" path="res://Inventory/Scenes/inventory.tscn" id="15_y687k"]
 [ext_resource type="Script" uid="uid://cyxesfjkw7mwh" path="res://label.gd" id="17_6cww0"]
+[ext_resource type="FontFile" uid="uid://1r83flt5iafq" path="res://Inventory/Items/icons/OneTimeNbpRegular-YJyO.ttf" id="17_tjo62"]
 
 [sub_resource type="GDScript" id="GDScript_gl4o0"]
 resource_name = "CameraControl"
@@ -1153,42 +1154,11 @@ func _process(delta: float) -> void:
 "
 
 [sub_resource type="LabelSettings" id="LabelSettings_1g8qp"]
-font_size = 100
-
-[sub_resource type="FontFile" id="FontFile_lc4f4"]
-cache/0/16/0/ascent = 0.0
-cache/0/16/0/descent = 0.0
-cache/0/16/0/underline_position = 0.0
-cache/0/16/0/underline_thickness = 0.0
-cache/0/16/0/scale = 1.0
-cache/0/17/0/ascent = 0.0
-cache/0/17/0/descent = 0.0
-cache/0/17/0/underline_position = 0.0
-cache/0/17/0/underline_thickness = 0.0
-cache/0/17/0/scale = 1.0
-cache/0/18/0/ascent = 0.0
-cache/0/18/0/descent = 0.0
-cache/0/18/0/underline_position = 0.0
-cache/0/18/0/underline_thickness = 0.0
-cache/0/18/0/scale = 1.0
-cache/0/19/0/ascent = 0.0
-cache/0/19/0/descent = 0.0
-cache/0/19/0/underline_position = 0.0
-cache/0/19/0/underline_thickness = 0.0
-cache/0/19/0/scale = 1.0
-cache/0/1/0/ascent = 0.0
-cache/0/1/0/descent = 0.0
-cache/0/1/0/underline_position = 0.0
-cache/0/1/0/underline_thickness = 0.0
-cache/0/1/0/scale = 1.0
-cache/0/100/0/ascent = 0.0
-cache/0/100/0/descent = 0.0
-cache/0/100/0/underline_position = 0.0
-cache/0/100/0/underline_thickness = 0.0
-cache/0/100/0/scale = 1.0
+font = ExtResource("17_tjo62")
+font_size = 210
 
 [sub_resource type="LabelSettings" id="LabelSettings_6cww0"]
-font = SubResource("FontFile_lc4f4")
+font = ExtResource("17_tjo62")
 font_size = 100
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lc4f4"]
@@ -1207,12 +1177,15 @@ position = Vector2(-1, 0)
 stream = ExtResource("1_8ruww")
 volume_db = -5.333
 autoplay = true
+panning_strength = 0.0
 
 [node name="moveSFX" type="AudioStreamPlayer2D" parent="."]
 volume_db = -5.333
+panning_strength = 0.0
 script = ExtResource("2_1v1rb")
 
 [node name="eventSFX" type="AudioStreamPlayer2D" parent="."]
+panning_strength = 0.0
 
 [node name="Combat" parent="." node_paths=PackedStringArray("black_transition", "player", "music") instance=ExtResource("1_qvwqx")]
 visible = false
@@ -1306,8 +1279,9 @@ player = NodePath("../../../TileSpawner/Node2D2/Player")
 choice_label = NodePath("ChoiceLabel")
 
 [node name="Sprite2D" type="Sprite2D" parent="UserInterface/Control/Box"]
+position = Vector2(0, -88)
 scale = Vector2(10, 10)
-texture = ExtResource("14_pwyxv")
+texture = ExtResource("15_6cww0")
 
 [node name="ItemLabel" type="Label" parent="UserInterface/Control/Box"]
 modulate = Color(0, 0, 0, 1)
@@ -1316,13 +1290,14 @@ anchor_left = -2.375
 anchor_top = -1.05
 anchor_right = 14.95
 anchor_bottom = 8.675
-offset_left = -1969.63
+offset_left = -1988.63
 offset_top = -850.95
-offset_right = -1342.95
-offset_bottom = -443.675
+offset_right = -1139.95
+offset_bottom = -94.675
 text = "You got:
 
-nothing haha"
+nothing haha
+"
 label_settings = SubResource("LabelSettings_1g8qp")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -1335,9 +1310,9 @@ anchor_left = -2.375
 anchor_top = -1.04999
 anchor_right = 246.95
 anchor_bottom = 137.675
-offset_left = -2169.63
+offset_left = -2188.63
 offset_top = -1461.95
-offset_right = -1391.95
+offset_right = -1216.95
 offset_bottom = -1054.68
 text = "nothing happened
 lmao"
@@ -1355,11 +1330,11 @@ offset_bottom = -885.0
 scale = Vector2(6, 6)
 
 [node name="Label" type="Label" parent="UserInterface"]
-offset_left = 4.0
-offset_top = -19.0
-offset_right = 582.0
-offset_bottom = 115.0
-scale = Vector2(0.69, 0.69)
+offset_left = 10.0
+offset_top = -41.0
+offset_right = 468.0
+offset_bottom = 43.0
+scale = Vector2(0.885, 0.885)
 text = "(placeholder)"
 label_settings = SubResource("LabelSettings_6cww0")
 script = ExtResource("17_6cww0")
