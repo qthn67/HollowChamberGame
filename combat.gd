@@ -79,6 +79,7 @@ func _process(_delta):
 	
 	
 	if health_element.current_hp <= 0:
+		boss_start = false
 		narrate("player lost")
 		black_transition.combat_leave = true
 		if (black_transition.combat_leave):
